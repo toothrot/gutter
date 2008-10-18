@@ -21,8 +21,8 @@ Shoes.app do
   twit = Twitter::Base.new(gtter.user, gtter.password)
   stack :height => 400, :scroll => true do
     twit.timeline(:friends).each do |status|
-      stack :margin => [0,5,0,5] do
-        background white
+      stack :margin => [5,5,5,5] do
+        rect(:width => width, :height => height, :curve => 3, :fill => white)
         flow do
           image status.user.profile_image_url
           para(strong("#{status.user.name}: "), status.text, :margin_left => 50)
