@@ -1,8 +1,14 @@
-== Gutter ==
+=Gutter
+
+==use it
 Copy gutter.yml.example to gutter.yml
 Edit gutter.yml and put in your credientials.
 
-$ shoes gutter.rb
+  shoes gutter.rb
 
-== Things ==
-It doesn't update on it's own yet.  So you have to open and close it.  Yeah.
+==Things
+
+ * It doesn't update on it's own yet.  So you have to open and close it.  Yeah.
+
+==Stuff
+(c) 2008 Alexander Rakoczy
