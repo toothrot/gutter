@@ -19,7 +19,7 @@ end
 Shoes.app do
   gtter = Gutter.new
   twit = Twitter::Base.new(gtter.user, gtter.password)
-  stack :height => 475, :scroll => true do
+  stack :height => height - 25, :scroll => true do
     twit.timeline(:friends).each do |status|
       tweet = flow :margin => [5,5,5,5] do
         background white
@@ -34,7 +34,9 @@ Shoes.app do
     end # end timeline
   end
   flow do 
-    edit_line "tweet", :width => width - 150
-    button "blag"
+    tweet_text = edit_line "tweet", :width => width - 150
+    button "blag" do
+      twit.post(tweet_text.text)
+    end
   end
 end
