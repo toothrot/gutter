@@ -9,11 +9,18 @@ class Gutter
   attr_accessor :password
 
   def initialize
-    conf = YAML::load(File.open('gutter.yml'))
+    conf = YAML::load(File.open(File.join("#{ENV['HOME'] || ENV['USERPROFILE']}",'.gutter.yml')))
     @user = conf["gutter"]["login"]
     @password = conf["gutter"]["password"]
+  rescue
+    @user, @password = nil, nil
   end
 
+  def save
+    YAML::dump({'gutter' => {'login' => user, 'password' => password}}, File.open(File.join("#{ENV['HOME'] || ENV['USERPROFILE']}",'.gutter.yml'), 'w'))
+  rescue
+    puts "Can't open preferences file"
+  end
 end
 
 module GutterUI
@@ -45,6 +52,11 @@ Shoes.app do
   background black
   stroke white
   gtter = Gutter.new
+  while gtter.user.blank? || gtter.password.blank?
+    gtter.user = ask('Please enter your Twitter Username:')
+    gtter.password = ask('Please enter your Twitter Password:')
+  end
+  gtter.save
   @twit = Twitter::Base.new(gtter.user, gtter.password)
   @timeline = flow :height => height - 35, :scroll => true do
     para "loading"

@@ -8,4 +8,4 @@ Edit gutter.yml and put in your credientials.
 
 ==Things
 
- * It doesn't update on it's own yet.  So you have to open and close it.  Yeah.
+ * Need to do parsing of links out of status text yet.
