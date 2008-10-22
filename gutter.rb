@@ -28,7 +28,6 @@ module GutterUI
           end
           stack :width => 500 - width do
             inscription(strong("#{status.user.name}: ", :stroke => darkorange), status.text, :margin_left => 20, :stroke => white)
-            link 'reply', :click => 'http://www.google.com'
           end
           click do
             @tweet_text.text = "@#{status.user.screen_name}: "
