@@ -26,7 +26,13 @@ end
 module GutterUI
   def insert_links(str)
     str.split.inject([]) do |a,e|
-      result = (e =~ %r[https?://\S*]) ? link(e, :click => e) : e
+      result = if (e =~ %r[https?://\S*]) 
+        link(e, :click => e)
+      elsif (e =~ %r[@\w])
+        link(e, :underline => 'none')
+      else
+        e
+      end
       a << result
       a << ' '
     end
@@ -38,9 +44,14 @@ module GutterUI
 
   def draw_timeline
     @twit.timeline(:friends).each do |status|
-      tweet = flow :margin => [5,5,20,5] do
-        background '#202020', :curve => 8
-        border dimgray, :curve => 8
+      tweet = flow :margin => [5,2,20,2] do
+        if status.text =~ %r[^@#{@user}]
+          background '#303030', :curve => 8
+          border gray, :curve => 8
+        else 
+          background '#202020', :curve => 8
+          border dimgray, :curve => 8
+        end
         stack :width => 50, :margin => [4,4,2,4] do
           image status.user.profile_image_url
           click { reply(status) }
@@ -53,7 +64,7 @@ module GutterUI
   end
 end
 
-Shoes.app(:scroll => false) do
+Shoes.app do
   extend GutterUI 
   background black
   stroke white
@@ -63,24 +74,27 @@ Shoes.app(:scroll => false) do
     gtter.password = ask('Please enter your Twitter Password:')
   end
   gtter.save
+  @user = gtter.user
   @twit = Twitter::Base.new(gtter.user, gtter.password)
-  @timeline = stack :height => height - 38, :width => width, :scroll => true do
-    para "loading"
-  end
-  flow do 
-    background '#202020'
-    border dimgray
-    @tweet_text = edit_line("", :width => width - 250) do |e| 
-      @counter.text =  140 - (e.text.size || 0)
+  stack do
+    flow do 
+      background '#202020'
+      border dimgray
+      @tweet_text = edit_line("", :width => width - 250) do |e| 
+        @counter.text =  140 - (e.text.size || 0)
+      end
+      button "blag" do
+        @twit.post(@tweet_text.text)
+        @tweet_text.text = ''
+      end
+      para link('refresh', :click => lambda { @timeline.clear { draw_timeline } })
+      para " | "
+      @counter = strong("0")
+      para @counter, :stroke => white
     end
-    button "blag" do
-      @twit.post(@tweet_text.text)
-      @tweet_text.text = ''
+    @timeline = stack :margin => [0,5,0,0] do
+      para "loading"
     end
-    para link('refresh', :click => lambda { @timeline.clear { draw_timeline } })
-    para " | "
-    @counter = strong("0")
-    para @counter, :stroke => white
   end
   @timeline.clear { draw_timeline }
   timer(60*6) do
