@@ -81,17 +81,19 @@ Shoes.app do
     flow do 
       background '#202020'
       border dimgray
-      @tweet_text = edit_line("", :width => width - 250) do |e| 
-        @counter.text =  140 - (e.text.size || 0)
+      flow :margin => [5,5,5,0] do
+        @tweet_text = edit_line("", :width => width - 250) do |e| 
+          @counter.text =  140 - (e.text.size || 0)
+        end
+        button "blag" do
+          @twit.post(@tweet_text.text)
+          @tweet_text.text = ''
+        end
+        para link('refresh', :click => lambda { @timeline.clear { draw_timeline } })
+        para " | "
+        @counter = strong("0")
+        para @counter, :stroke => white
       end
-      button "blag" do
-        @twit.post(@tweet_text.text)
-        @tweet_text.text = ''
-      end
-      para link('refresh', :click => lambda { @timeline.clear { draw_timeline } })
-      para " | "
-      @counter = strong("0")
-      para @counter, :stroke => white
     end
     @timeline = stack :margin => [0,5,0,0] do
       para "loading"
