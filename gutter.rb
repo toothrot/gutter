@@ -46,18 +46,19 @@ module GutterUI
     @twit.timeline(:friends).each do |status|
       tweet = flow :margin => [5,2,20,2] do
         if status.text =~ %r[^@#{@user}]
-          background '#303030', :curve => 8
-          border gray, :curve => 8
+          background '#303030', :curve => 10
+          border gray, :curve => 10
         else 
-          background '#202020', :curve => 8
-          border dimgray, :curve => 8
+          background '#202020', :curve => 10
+          border '#202020', :curve => 10
         end
-        stack :width => 50, :margin => [4,4,2,4] do
+        stack :width => 50, :margin => [6,6,2,6] do
           image status.user.profile_image_url
           click { reply(status) }
         end
-        flow :width => 500 - width do
-          inscription(strong("#{status.user.name}: ", :stroke => darkorange), insert_links(status.text), ' ', link('reply', :click => lambda {reply(status)}), :margin_left => 20, :stroke => white)
+        stack :width => 550 - width do
+          para(strong(status.user.name, :stroke => darkorange), :margin => [10,5,0,0])
+          inscription(insert_links(status.text), ' ', link('reply', :click => lambda {reply(status)}), :margin => [10,0,0,6], :stroke => white)
         end
       end # end tweet
     end # end twit
