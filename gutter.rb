@@ -67,6 +67,7 @@ Shoes.app do
     @tweet_text = edit_line "", :width => width - 250
     button "blag" do
       @twit.post(@tweet_text.text)
+      @tweet_text.text = ''
     end
     button "refresh" do
       @timeline.clear { draw_timeline }
