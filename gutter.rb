@@ -18,30 +18,39 @@ end
 
 module GutterUI
   def draw_timeline
-    @timeline = stack :height => height - 35, :scroll => true do
+    @timeline = flow :height => height - 35, :scroll => true do
       @twit.timeline(:friends).each do |status|
-        tweet = flow :margin => [5,5,5,5] do
-          background white
-          border(black, :strokewidth => 2)
-          stack :width => 50, :margin => [2,2,2,2] do
+        tweet = flow :margin => [5,5,20,5] do
+          background '#202020', :curve => 8
+          border dimgray, :curve => 8
+          stack :width => 50, :margin => [4,4,2,4] do
             image status.user.profile_image_url
           end
           stack :width => 500 - width do
-            inscription(strong("#{status.user.name}: "), status.text, :margin_left => 20)
+            inscription(strong("#{status.user.name}: ", :stroke => darkorange), status.text, :margin_left => 20, :stroke => white)
+            link 'reply', :click => 'http://www.google.com'
           end
-        end
-      end # end timeline
-    end
+          click do
+            @tweet_text.text = "@#{status.user.screen_name}: "
+          end
+        end # end tweet
+        tweet.hover { |twe| twe.border yellow, :curve => 8 }
+        tweet.leave { |twe| twe.border dimgray, :curve => 8 }
+      end # end twit
+    end # end timeline
   end
 end
 
 Shoes.app do
   extend GutterUI 
+  background black
   gtter = Gutter.new
   @twit = Twitter::Base.new(gtter.user, gtter.password)
-  draw_timeline
+  @timeline = flow :height => height - 35, :scroll => true do
+    para "loading"
+  end
   flow do 
-    tweet_text = edit_line "tweet", :width => width - 250
+    @tweet_text = edit_line "tweet", :width => width - 250
     button "blag" do
       @twit.post(tweet_text.text)
     end
@@ -49,4 +58,5 @@ Shoes.app do
       @timeline.clear { draw_timeline }
     end
   end
+  @timeline.clear { draw_timeline }
 end
