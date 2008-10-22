@@ -37,21 +37,19 @@ module GutterUI
   end
 
   def draw_timeline
-    @timeline = stack :height => height - 35, :width => width, :scroll => true do
-      @twit.timeline(:friends).each do |status|
-        tweet = flow :margin => [5,5,20,5] do
-          background '#202020', :curve => 8
-          border dimgray, :curve => 8
-          stack :width => 50, :margin => [4,4,2,4] do
-            image status.user.profile_image_url
-            click { reply(status) }
-          end
-          flow :width => 500 - width do
-            inscription(strong("#{status.user.name}: ", :stroke => darkorange), insert_links(status.text), ' ', link('reply', :click => lambda {reply(status)}), :margin_left => 20, :stroke => white)
-          end
-        end # end tweet
-      end # end twit
-    end # end timeline
+    @twit.timeline(:friends).each do |status|
+      tweet = flow :margin => [5,5,20,5] do
+        background '#202020', :curve => 8
+        border dimgray, :curve => 8
+        stack :width => 50, :margin => [4,4,2,4] do
+          image status.user.profile_image_url
+          click { reply(status) }
+        end
+        flow :width => 500 - width do
+          inscription(strong("#{status.user.name}: ", :stroke => darkorange), insert_links(status.text), ' ', link('reply', :click => lambda {reply(status)}), :margin_left => 20, :stroke => white)
+        end
+      end # end tweet
+    end # end twit
   end
 end
 
@@ -66,7 +64,7 @@ Shoes.app(:scroll => false) do
   end
   gtter.save
   @twit = Twitter::Base.new(gtter.user, gtter.password)
-  @timeline = flow :height => height - 38, :scroll => true do
+  @timeline = stack :height => height - 38, :width => width, :scroll => true do
     para "loading"
   end
   flow do 
