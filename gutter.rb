@@ -53,7 +53,7 @@ module GutterUI
           border '#202020', :curve => 10
         end
         stack :width => 50, :margin => [6,6,2,6] do
-          image status.user.profile_image_url
+          image status.user.profile_image_url if status.user
           click { reply(status) }
         end
         stack :width => 550 - width do
