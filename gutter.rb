@@ -24,8 +24,14 @@ class Gutter
 end
 
 module GutterUI
+  def insert_links(str)
+    str.split.map do |e|
+      (e =~ %r[https?://\S*]) ? link(e, :click => e) : e
+    end
+  end
+
   def reply(status)
-    @tweet_text.text = "@#{status.user.screen_name}: "
+    @tweet_text.text = "@#{status.user.screen_name} "
   end
 
   def draw_timeline
@@ -39,7 +45,7 @@ module GutterUI
             click { reply(status) }
           end
           flow :width => 500 - width do
-            inscription(strong("#{status.user.name}: ", :stroke => darkorange), status.text, ' ', link('reply', :click => lambda {reply(status)}), :margin_left => 20, :stroke => white)
+            inscription(strong("#{status.user.name}: ", :stroke => darkorange), insert_links(status.text), ' ', link('reply', :click => lambda {reply(status)}), :margin_left => 20, :stroke => white)
           end
         end # end tweet
       end # end twit
@@ -47,7 +53,7 @@ module GutterUI
   end
 end
 
-Shoes.app do
+Shoes.app(:scroll => false) do
   extend GutterUI 
   background black
   stroke white
@@ -58,20 +64,23 @@ Shoes.app do
   end
   gtter.save
   @twit = Twitter::Base.new(gtter.user, gtter.password)
-  @timeline = flow :height => height - 35, :scroll => true do
+  @timeline = flow :height => height - 38, :scroll => true do
     para "loading"
   end
   flow do 
     background '#202020'
     border dimgray
-    @tweet_text = edit_line "", :width => width - 250
+    @tweet_text = edit_line("", :width => width - 250) do |e| 
+      @counter.text =  140 - (e.text.size || 0)
+    end
     button "blag" do
       @twit.post(@tweet_text.text)
       @tweet_text.text = ''
     end
-    button "refresh" do
-      @timeline.clear { draw_timeline }
-    end
+    para link('refresh', :click => lambda { @timeline.clear { draw_timeline } })
+    para " | "
+    @counter = strong("0")
+    para @counter, :stroke => white
   end
   @timeline.clear { draw_timeline }
   timer(60*6) do
