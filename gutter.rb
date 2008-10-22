@@ -62,6 +62,8 @@ Shoes.app do
     para "loading"
   end
   flow do 
+    background '#202020'
+    border dimgray
     @tweet_text = edit_line "", :width => width - 250
     button "blag" do
       @twit.post(tweet_text.text)
