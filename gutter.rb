@@ -25,8 +25,10 @@ end
 
 module GutterUI
   def insert_links(str)
-    str.split.map do |e|
-      (e =~ %r[https?://\S*]) ? link(e, :click => e) : e
+    str.split.inject([]) do |a,e|
+      result = (e =~ %r[https?://\S*]) ? link(e, :click => e) : e
+      a << result
+      a << ' '
     end
   end
 
