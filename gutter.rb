@@ -114,6 +114,7 @@ Shoes.app do
         button "blag" do
           @twit.post(@tweet_text.text)
           @tweet_text.text = ''
+          timer(10) { lambda { @timeline.clear { draw_timeline } } }
         end
         para link('refresh', :click => lambda { @timeline.clear { draw_timeline } })
         para " | "
@@ -126,7 +127,7 @@ Shoes.app do
     end
   end
   @timeline.clear { draw_timeline }
-  timer(60*6) do
+  every(60*6) do
     @timeline.clear { draw_timeline }
   end
 end
