@@ -54,7 +54,7 @@ module GutterUI
           border gray, :curve => 10
         else 
           background '#202020', :curve => 10
-          border '#303030', :curve => 10
+          border (status.user.screen_name == @user) ? darkslateblue : '#303030', :curve => 10
         end
         stack :width => 50, :margin => [6,6,2,6] do
           image status.user.profile_image_url if status.user
