@@ -61,7 +61,10 @@ module GutterUI
           click { reply(status) }
         end
         stack :width => -100 do
-          para(strong(status.user.name, :stroke => darkorange), :margin => [10,5,0,0])
+          flow do #header
+            para(strong(status.user.name, :stroke => darkorange), :margin => [10,5,5,0])
+            inscription(Time.parse(status.created_at).strftime("at %X"), :stroke => gray, :margin => [10,8,0,0])
+          end
           inscription(insert_links(status.text), ' ', :margin => [10,0,0,6], :stroke => white)
         end
         flow :width => 50, :margin => [5,2,2,5] do
