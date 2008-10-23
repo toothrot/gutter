@@ -91,7 +91,7 @@ module GutterUI
   end
 end
 
-Shoes.app do
+Shoes.app :title => 'gutter' do
   extend GutterUI 
   background black
   stroke white
