@@ -58,9 +58,28 @@ module GutterUI
           image status.user.profile_image_url if status.user
           click { reply(status) }
         end
-        stack :width => 550 - width do
+        stack :width => -100 do
           para(strong(status.user.name, :stroke => darkorange), :margin => [10,5,0,0])
-          inscription(insert_links(status.text), ' ', link('reply', :click => lambda {reply(status)}), :margin => [10,0,0,6], :stroke => white)
+          inscription(insert_links(status.text), ' ', :margin => [10,0,0,6], :stroke => white)
+        end
+        flow :width => 50, :margin => [5,2,2,5] do
+          background '#252525', :curve => 10
+          border '#303030', :curve => 10
+          stack :width => '50%', :margin => [2,2,0,0] do
+            background '#303030', :curve => 8 
+            border '#3a3a3a', :curve => 8
+            hover { |r| r.border( white, :curve => 8) }
+            leave { |r| r.border('#3a3a3a', :curve => 8) }
+            inscription('r', :margin => [6,0,6,4], :stroke => white)
+            click { reply(status) }
+          end
+          stack :width => '50%', :margin => [2,2,0,0] do
+            background '#303030', :curve => 8 
+            border '#3a3a3a', :curve => 8
+            hover { |r| r.border( white, :curve => 8) }
+            leave { |r| r.border('#3a3a3a', :curve => 8) }
+            inscription('x', :margin => [6,0,6,4], :stroke => white)
+          end
         end
       end # end tweet
     end # end twit
