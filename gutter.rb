@@ -44,13 +44,13 @@ module GutterUI
 
   def draw_timeline
     @twit.timeline(:friends).each do |status|
-      tweet = flow :margin => [5,2,20,2] do
-        if status.text =~ %r[^@#{@user}]
+      tweet = flow :margin => [5,4,20,4] do
+        if status.text =~ %r[@#{@user}]
           background '#303030', :curve => 10
           border gray, :curve => 10
         else 
           background '#202020', :curve => 10
-          border '#202020', :curve => 10
+          border '#303030', :curve => 10
         end
         stack :width => 50, :margin => [6,6,2,6] do
           image status.user.profile_image_url if status.user
@@ -91,7 +91,7 @@ Shoes.app do
         end
         para link('refresh', :click => lambda { @timeline.clear { draw_timeline } })
         para " | "
-        @counter = strong("0")
+        @counter = strong("140")
         para @counter, :stroke => white
       end
     end
