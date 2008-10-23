@@ -70,7 +70,7 @@ module GutterUI
           stack :width => '50%', :margin => [2,2,0,0] do
             background '#303030', :curve => 8 
             border '#3a3a3a', :curve => 8
-            hover { |r| r.border( white, :curve => 8) }
+            hover { |r| r.border( gray, :curve => 8) }
             leave { |r| r.border('#3a3a3a', :curve => 8) }
             inscription('r', :margin => [6,0,6,4], :stroke => white)
             click { reply(status) }
@@ -78,7 +78,7 @@ module GutterUI
           stack :width => '50%', :margin => [2,2,0,0] do
             background '#303030', :curve => 8 
             border '#3a3a3a', :curve => 8
-            hover { |r| r.border( white, :curve => 8) }
+            hover { |r| r.border( gray, :curve => 8) }
             leave { |r| r.border('#3a3a3a', :curve => 8) }
             inscription('x', :margin => [6,0,6,4], :stroke => white)
           end
