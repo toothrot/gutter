@@ -47,6 +47,7 @@ module GutterUI
   end
 
   def draw_timeline
+    active_controls = nil
     @twit.timeline(:friends).each do |status|
       tweet = flow :margin => [5,4,20,4] do
         if status.text =~ %r[@#{@user}]
@@ -60,32 +61,28 @@ module GutterUI
           image status.user.profile_image_url if status.user
           click { reply(status) }
         end
-        stack :width => -100 do
+        stack :width => -80 do
           flow do #header
             para(strong(status.user.name, :stroke => darkorange), :margin => [10,5,5,0])
             inscription(Time.parse(status.created_at).strftime("at %X"), :stroke => gray, :margin => [10,8,0,0])
           end
           inscription(insert_links(status.text), ' ', :margin => [10,0,0,6], :stroke => white)
         end
-        flow :width => 50, :margin => [5,2,2,5] do
-          background '#252525', :curve => 10
-          border '#303030', :curve => 10
-          stack :width => '50%', :margin => [2,2,0,0] do
-            background '#303030', :curve => 8 
-            border '#3a3a3a', :curve => 8
-            hover { |r| r.border( gray, :curve => 8) }
-            leave { |r| r.border('#3a3a3a', :curve => 8) }
-            inscription('r', :margin => [6,0,6,4], :stroke => white)
+        control = stack :width => 29, :margin => [5,2,2,5] do
+          stack :width => '20', :margin => [2,2,0,0] do
+            #background '#303030', :curve => 8 
+            #border '#3a3a3a', :curve => 8
+            #hover { |r| r.border( gray, :curve => 8) }
+            #leave { |r| r.border('#3a3a3a', :curve => 8) }
+            #inscription('r', :margin => [6,0,6,4], :stroke => white)
+            image 'arrow_undo.png'
             click { reply(status) }
           end
-          stack :width => '50%', :margin => [2,2,0,0] do
-            background '#303030', :curve => 8 
-            border '#3a3a3a', :curve => 8
-            hover { |r| r.border( gray, :curve => 8) }
-            leave { |r| r.border('#3a3a3a', :curve => 8) }
-            inscription('x', :margin => [6,0,6,4], :stroke => white)
-          end
         end
+        control.hide
+
+        hover { control.show }
+        leave { control.hide }
       end # end tweet
     end # end twit
   end

@@ -9,3 +9,7 @@ Edit gutter.yml and put in your credientials.
 ==Things
 
  * Need to do parsing of links out of status text yet.
+
+==Also
+
+ * arrow_undo.png is from the silk icon set (http://www.famfamfam.com/lab/icons/silk/)
