@@ -34,6 +34,8 @@ module GutterUI
         link(e, :underline => 'none')
       elsif (e =~ %r[&quot;])
         e.gsub(%r[&quot;], '"')
+      elsif (e =~ %r[&#8217;])
+        e.gsub(%r[&#8217;], "'")
       else
         e
       end
