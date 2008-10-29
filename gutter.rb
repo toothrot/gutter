@@ -127,7 +127,7 @@ Shoes.app :title => 'gutter' do
         button "blag" do
           @twit.post(@tweet_text.text)
           @tweet_text.text = ''
-          timer(30) { lambda { @timeline.clear { draw_timeline } } }
+          timer(5) { @timeline.clear { draw_timeline } }
         end
         image('arrow_refresh.png', :click => lambda { @timeline.clear { draw_timeline } }, :margin => [5,5,5,5] )
         para "| "
