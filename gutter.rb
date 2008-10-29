@@ -3,8 +3,11 @@ Shoes.setup do
 end
 require 'twitter'
 require 'yaml'
+
+#this should go away
 cache = File.join(LIB_DIR, "+data")
 File.delete(cache) if File.exists?(cache)
+
 class Gutter
   attr_accessor :user
   attr_accessor :password
@@ -78,8 +81,8 @@ module GutterUI
   def status_controls(status)
     control = stack :width => 29, :margin => [5,2,2,5] do
       stack :width => '20', :margin => [2,2,0,0] do
-        image 'arrow_undo.png'
-        click { reply(status) }
+        image('arrow_undo.png', :click => lambda { reply(status) })
+        image('page_edit.png', :click => lambda { ask ("Direct Message #{status.user.screen_name}")})
       end
     end
   end
@@ -126,8 +129,8 @@ Shoes.app :title => 'gutter' do
           @tweet_text.text = ''
           timer(30) { lambda { @timeline.clear { draw_timeline } } }
         end
-        para link('refresh', :click => lambda { @timeline.clear { draw_timeline } })
-        para " | "
+        image('arrow_refresh.png', :click => lambda { @timeline.clear { draw_timeline } }, :margin => [5,5,5,5] )
+        para "| "
         @counter = strong("140")
         para @counter, :stroke => white
       end
