@@ -27,13 +27,13 @@ end
 
 module GutterUI
   def insert_links(str)
+    str.gsub!(%r[&quot;], '"')
+    str.gsub!(%r[&amp;], '&')
     str.split.inject([]) do |a,e|
       result = if (e =~ %r[https?://\S*]) 
         link(e, :click => e)
       elsif (e =~ %r[@\w])
         link(e, :underline => 'none')
-      elsif (e =~ %r[&quot;])
-        e.gsub(%r[&quot;], '"')
       else
         e
       end
@@ -46,39 +46,50 @@ module GutterUI
     @tweet_text.text = "@#{status.user.screen_name} "
   end
 
+  def status_background(status)
+    if status.text =~ %r[@#{@user}]
+      background '#303030', :curve => 10
+      border gray, :curve => 10
+    else 
+      background '#202020', :curve => 10
+      border (status.user.screen_name == @user) ? darkslateblue : '#303030', :curve => 10
+    end
+  end
+
+  def status_image(status)
+    stack :width => 50, :margin => [6,6,2,6] do
+      image status.user.profile_image_url if status.user
+      click { reply(status) }
+    end
+  end
+
+  def status_text(status)
+    stack :width => -80 do
+      flow do
+        para(strong(status.user.name, :stroke => darkorange), :margin => [10,5,5,0])
+        inscription(Time.parse(status.created_at).strftime("at %X"), :stroke => gray, :margin => [10,8,0,0])
+      end
+      inscription(insert_links(status.text), ' ', :margin => [10,0,0,6], :stroke => white)
+    end
+  end
+
+  def status_controls(status)
+    control = stack :width => 29, :margin => [5,2,2,5] do
+      stack :width => '20', :margin => [2,2,0,0] do
+        image 'arrow_undo.png'
+        click { reply(status) }
+      end
+    end
+  end
+
   def draw_timeline
     active_controls = nil
     @twit.timeline(:friends).each do |status|
       tweet = flow :margin => [5,4,20,4] do
-        if status.text =~ %r[@#{@user}]
-          background '#303030', :curve => 10
-          border gray, :curve => 10
-        else 
-          background '#202020', :curve => 10
-          border (status.user.screen_name == @user) ? darkslateblue : '#303030', :curve => 10
-        end
-        stack :width => 50, :margin => [6,6,2,6] do
-          image status.user.profile_image_url if status.user
-          click { reply(status) }
-        end
-        stack :width => -80 do
-          flow do #header
-            para(strong(status.user.name, :stroke => darkorange), :margin => [10,5,5,0])
-            inscription(Time.parse(status.created_at).strftime("at %X"), :stroke => gray, :margin => [10,8,0,0])
-          end
-          inscription(insert_links(status.text), ' ', :margin => [10,0,0,6], :stroke => white)
-        end
-        control = stack :width => 29, :margin => [5,2,2,5] do
-          stack :width => '20', :margin => [2,2,0,0] do
-            #background '#303030', :curve => 8 
-            #border '#3a3a3a', :curve => 8
-            #hover { |r| r.border( gray, :curve => 8) }
-            #leave { |r| r.border('#3a3a3a', :curve => 8) }
-            #inscription('r', :margin => [6,0,6,4], :stroke => white)
-            image 'arrow_undo.png'
-            click { reply(status) }
-          end
-        end
+        status_background(status)
+        status_image(status)
+        status_text(status)
+        control = status_controls(status)
         control.hide
 
         hover { control.show }
@@ -111,7 +122,7 @@ Shoes.app :title => 'gutter' do
         button "blag" do
           @twit.post(@tweet_text.text)
           @tweet_text.text = ''
-          timer(10) { lambda { @timeline.clear { draw_timeline } } }
+          timer(30) { lambda { @timeline.clear { draw_timeline } } }
         end
         para link('refresh', :click => lambda { @timeline.clear { draw_timeline } })
         para " | "
@@ -128,3 +139,4 @@ Shoes.app :title => 'gutter' do
     @timeline.clear { draw_timeline }
   end
 end
+
