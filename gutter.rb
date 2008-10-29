@@ -29,6 +29,7 @@ end
 module GutterUI
   def insert_links(str)
     str.gsub!(%r[&quot;], '"')
+    str.gsub!(%r[&#8217;], "'")
     str.gsub!(%r[&amp;], '&')
     str.split.inject([]) do |a,e|
       result = if (e =~ %r[https?://\S*]) 
