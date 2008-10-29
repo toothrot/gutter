@@ -3,7 +3,8 @@ Shoes.setup do
 end
 require 'twitter'
 require 'yaml'
-
+cache = File.join(LIB_DIR, "+data")
+File.delete(cache) if File.exists?(cache)
 class Gutter
   attr_accessor :user
   attr_accessor :password
