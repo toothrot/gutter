@@ -1,0 +1,3 @@
+[submodule "lib/twitter"]
+	path = lib/twitter
+	url = git://github.com/jnunemaker/twitter.git
