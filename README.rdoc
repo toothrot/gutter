@@ -8,7 +8,9 @@ Edit gutter.yml and put in your credientials.
 
 ==Things
 
- * Need to do parsing of links out of status text yet.
+  * Everything is going nice.
+  * Direct messaging needs to work.
+  * I'd also like to freeze the twitter gem.
 
 ==Also
 
