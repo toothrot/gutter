@@ -1,4 +1,7 @@
-require 'lib/twitter/lib/twitter'
+Shoes.setup do
+  gem 'twitter'
+end
+require 'twitter'
 require 'yaml'
 
 #this should go away
