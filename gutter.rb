@@ -81,8 +81,8 @@ module GutterUI
   def status_controls(status)
     control = stack :width => 29, :margin => [5,2,2,5] do
       stack :width => '20', :margin => [2,2,0,0] do
-        image('arrow_undo.png', :click => lambda { reply(status) })
-        image('page_edit.png', :click => lambda { ask ("Direct Message #{status.user.screen_name}")})
+        image('http://toothrot.nfshost.com/gutter/icons/arrow_undo.png', :click => lambda { reply(status) })
+        image('http://toothrot.nfshost.com/gutter/icons/page_edit.png', :click => lambda { ask ("Direct Message #{status.user.screen_name}")})
       end
     end
   end
@@ -129,7 +129,7 @@ Shoes.app :title => 'gutter' do
           @tweet_text.text = ''
           timer(5) { @timeline.clear { draw_timeline } }
         end
-        image('arrow_refresh.png', :click => lambda { @timeline.clear { draw_timeline } }, :margin => [5,5,5,5] )
+        image('http://toothrot.nfshost.com/gutter/icons/arrow_refresh.png', :click => lambda { @timeline.clear { draw_timeline } }, :margin => [5,5,5,5] )
         para "| "
         @counter = strong("140")
         para @counter, :stroke => white
