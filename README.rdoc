@@ -1,17 +1,19 @@
 =Gutter
 
 ==use it
-Copy gutter.yml.example to gutter.yml
-Edit gutter.yml and put in your credientials.
 
   shoes gutter.rb
 
+or if you downloaded a build
+
+  linux: bash gutter.run
+  mac: pretty normal
+  windows: good luck
+
 ==Things
 
-  * Everything is going nice.
   * Direct messaging needs to work.
-  * I'd also like to freeze the twitter gem.
 
 ==Also
 
- * arrow_undo.png is from the silk icon set (http://www.famfamfam.com/lab/icons/silk/)
+ * icons are from the silk icon set (http://www.famfamfam.com/lab/icons/silk/)
