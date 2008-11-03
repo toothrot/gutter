@@ -111,7 +111,7 @@ Shoes.app :title => 'gutter' do
   gtter = Gutter.new
   while gtter.user.blank? || gtter.password.blank?
     gtter.user = ask('Please enter your Twitter Username:')
-    gtter.password = ask('Please enter your Twitter Password:')
+    gtter.password = ask('Please enter your Twitter Password:', :secret => true)
   end
   gtter.save
   @user = gtter.user
