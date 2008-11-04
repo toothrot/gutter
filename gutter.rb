@@ -104,7 +104,7 @@ module GutterUI
   end
 end
 
-Shoes.app :title => 'gutter' do
+Shoes.app :title => 'gutter', :width => 450 do
   extend GutterUI 
   background black
   stroke white
@@ -121,16 +121,25 @@ Shoes.app :title => 'gutter' do
       background '#202020'
       border dimgray
       flow :margin => [5,5,5,0] do
-        @tweet_text = edit_line("", :width => width - 250) do |e| 
+        @tweet_text = edit_line("", :width => width - 140) do |e| 
           @counter.text =  140 - (e.text.size || 0)
         end
-        button "blag" do
-          @twit.post(@tweet_text.text)
-          @tweet_text.text = ''
-          timer(5) { @timeline.clear { draw_timeline } }
+        @blag = stack :width => 40, :margin_left => 4, :margin_right => 4 do
+          background '#303030'
+          border dimgray
+          inscription "blag", :margin => [4]*4, :stroke => white
+          hover { @blag.border gray }
+          leave { @blag.border dimgray }
+          click do
+            @blag.border white
+            @twit.post(@tweet_text.text)
+            @tweet_text.text = ''
+            timer(5) { @timeline.clear { draw_timeline } }
+          end
+          release { @blag.border gray }
         end
         image('http://toothrot.nfshost.com/gutter/icons/arrow_refresh.png', :click => lambda { @timeline.clear { draw_timeline } }, :margin => [5,5,5,5] )
-        para "| "
+        para "| ", :stroke => gray
         @counter = strong("140")
         para @counter, :stroke => white
       end
