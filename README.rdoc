@@ -24,6 +24,7 @@ or if you downloaded a build
 
 ==Things
 
+  * *Use At least shoes r1057*
   * Growl/Libnotify: install "growlnotify" or "notify-send".
 
 ==TODO
