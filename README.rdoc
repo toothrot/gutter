@@ -1,6 +1,14 @@
 =Gutter
 
-==use it
+Gutter is a free Twitter client written in Shoes for Ruby (http://www.shoooes.net)
+
+==why
+
+I wrote this to better understand shoes, and more importantly, packaging applications with shoes.
+
+the exact same codebase works in linux, macos, and hopefully, eventually windows.
+
+==how
 
 get shoes from http://www.shoooes.net
 
@@ -17,8 +25,12 @@ or if you downloaded a build
 ==Things
 
   * Growl/Libnotify: install "growlnotify" or "notify-send".
+
+==TODO
+
   * Direct messaging needs to work.
 
 ==Also
 
  * icons are from the silk icon set (http://www.famfamfam.com/lab/icons/silk/)
+ * Gutter is GPLv3
