@@ -2,7 +2,11 @@
 
 ==use it
 
-  shoes gutter.rb
+get shoes from http://www.shoooes.net
+
+  shoes
+
+Then click your way to gutter.rb
 
 or if you downloaded a build
 
@@ -12,6 +16,7 @@ or if you downloaded a build
 
 ==Things
 
+  * Growl/Libnotify: install "growlnotify" or "notify-send".
   * Direct messaging needs to work.
 
 ==Also
