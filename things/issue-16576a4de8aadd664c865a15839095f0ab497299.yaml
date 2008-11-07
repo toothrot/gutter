@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add images to notification clients
+desc: the user images would be nice.  can we get these from /tmp?
+type: :feature
+component: gutter
+release: 
+reporter: toothrot <scissorjammer@gmail.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-11-07 18:59:12.501402 Z
+references: []
+
+id: 16576a4de8aadd664c865a15839095f0ab497299
+log_events: 
+- - 2008-11-07 18:59:13.221262 Z
+  - toothrot <scissorjammer@gmail.com>
+  - created
+  - ""

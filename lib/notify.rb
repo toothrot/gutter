@@ -1,8 +1,8 @@
 module Notify
   def self.extended(base)
     base.instance_eval do
-      @which = `which notify-send || which growlnotify`
-      unless $? == 0
+      @which = `which /usr/local/bin/growlnotify || which growlnotify || which notify-send`.chomp!
+      if @which.blank?
         info 'no notify-send or growlnotify!'
       else
         info "notify enabled through #{@which}"
@@ -20,10 +20,10 @@ module Notify
   end
 
   def growl(user,status)
-    `growlnotify -m "#{user}: #{status.gsub('"','\"')}"`
+    `#{@which} -t "#{user}" -m "#{status.gsub('"','\"')}"`
   end
 
   def libnotify(user,status)
-    `notify-send "#{user}" "#{status.gsub('"','\"')}"`
+    `#{@which} "#{user}" "#{status.gsub('"','\"')}"`
   end
 end

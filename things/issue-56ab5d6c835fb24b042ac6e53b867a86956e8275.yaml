@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: the blag button looks stupid in OSX
+desc: margin bottom seems way off for the text
+type: :bugfix
+component: gutter
+release: 
+reporter: toothrot <scissorjammer@gmail.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-11-07 18:56:32.236830 Z
+references: []
+
+id: 56ab5d6c835fb24b042ac6e53b867a86956e8275
+log_events: 
+- - 2008-11-07 18:56:38.780731 Z
+  - toothrot <scissorjammer@gmail.com>
+  - created
+  - ""

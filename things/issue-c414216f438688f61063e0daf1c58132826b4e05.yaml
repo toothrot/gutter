@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: growlnotify doesn't work
+desc: not found!
+type: :bugfix
+component: gutter
+release: 
+reporter: toothrot <scissorjammer@gmail.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-11-07 18:39:51.057111 Z
+references: []
+
+id: c414216f438688f61063e0daf1c58132826b4e05
+log_events: 
+- - 2008-11-07 18:39:52.976940 Z
+  - toothrot <scissorjammer@gmail.com>
+  - created
+  - ""
