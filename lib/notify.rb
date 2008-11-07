@@ -14,7 +14,6 @@ module Notify
     @olds ||= []
     news = statuses.reject { |i| @olds.include?(i) }
     @olds = statuses
-    info news.length
     news[0..3].each do |status|
       command =~ /growl/ ? growl(status.user.name, status.text) : libnotify(status.user.name, status.text)
     end
