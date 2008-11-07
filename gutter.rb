@@ -45,7 +45,7 @@ Shoes.app :title => 'gutter', :width => 450 do
         @tweet_text = edit_line("", :width => width - 140) do |e| 
           @counter.text =  140 - (e.text.size || 0)
         end
-          keypress { |k| send_tweet.call if k == :enter }
+          keypress { |k| send_tweet.call if (k == :enter) || (k == "\n") }
         @blag = stack :width => 40, :margin_left => 4, :margin_right => 4 do
           background '#303030'
           border dimgray
