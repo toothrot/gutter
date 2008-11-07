@@ -5,8 +5,8 @@ type: :bugfix
 component: gutter
 release: 
 reporter: toothrot <scissorjammer@gmail.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-11-07 18:39:51.057111 Z
 references: []
 
@@ -16,3 +16,7 @@ log_events:
   - toothrot <scissorjammer@gmail.com>
   - created
   - ""
+- - 2008-11-07 19:01:42.413962 Z
+  - toothrot <scissorjammer@gmail.com>
+  - closed with disposition fixed
+  - bashrc doesn't get loaded, so it wasn't in users path.  need to actually use the libraries sometime
