@@ -11,11 +11,13 @@ module Notify
   end
 
   def notify(command, statuses)
-    @olds ||= []
-    news = statuses.reject { |i| @olds.include?(i) }
-    @olds = statuses
-    news[0..3].each do |status|
-      command =~ /growl/ ? growl(status.user.name, status.text) : libnotify(status.user.name, status.text)
+    unless command.blank?
+      @olds ||= []
+      news = statuses.reject { |i| @olds.include?(i) }
+      @olds = statuses
+      news[0..3].each do |status|
+        command =~ /growl/ ? growl(status.user.name, status.text) : libnotify(status.user.name, status.text)
+      end
     end
   end
 
