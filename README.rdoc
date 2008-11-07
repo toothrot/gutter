@@ -29,6 +29,8 @@ or if you downloaded a build
 
 ==TODO
 
+  * Hitting return doesn't submit a tweet yet
+  * Scrolling hides the input box/clicking reply doesn't move to top
   * Direct messaging needs to work.
 
 ==Also

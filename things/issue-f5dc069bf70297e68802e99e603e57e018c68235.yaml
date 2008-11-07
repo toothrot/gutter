@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Direct messaging needs to work
+desc: ""
+type: :feature
+component: gutter
+release: 
+reporter: toothrot <scissorjammer@gmail.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-11-07 16:48:04.048141 Z
+references: []
+
+id: f5dc069bf70297e68802e99e603e57e018c68235
+log_events: 
+- - 2008-11-07 16:48:04.759922 Z
+  - toothrot <scissorjammer@gmail.com>
+  - created
+  - ""

@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: shoes launches links with x-www-browser instead of the window managers preferred browser
+desc: ""
+type: :bugfix
+component: gutter
+release: 
+reporter: toothrot <scissorjammer@gmail.com>
+status: :closed
+disposition: :wontfix
+creation_time: 2008-11-07 16:46:25.127779 Z
+references: []
+
+id: 6e0248416d54d8e92a549a9a1b29462a470a6939
+log_events: 
+- - 2008-11-07 16:46:26.751570 Z
+  - toothrot <scissorjammer@gmail.com>
+  - created
+  - ""
+- - 2008-11-07 16:46:52.463722 Z
+  - toothrot <scissorjammer@gmail.com>
+  - closed with disposition wontfix
+  - this is probably desired behavior

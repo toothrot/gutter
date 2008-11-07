@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: hitting return should tweet
+desc: return on the input box does not work
+type: :feature
+component: gutter
+release: 
+reporter: toothrot <scissorjammer@gmail.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-11-07 16:40:51.534469 Z
+references: []
+
+id: 52cb0abd1fa37c74582f569ebd2e7f8b21640125
+log_events: 
+- - 2008-11-07 16:40:55.094469 Z
+  - toothrot <scissorjammer@gmail.com>
+  - created
+  - ""
