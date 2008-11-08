@@ -50,7 +50,7 @@ module GutterUI
   def status_controls(status)
     control = stack :width => 29, :margin => [5,2,2,5] do
       stack :width => '20', :margin => [2,2,0,0] do
-        image('http://toothrot.nfshost.com/gutter/icons/arrow_undo.png', :click => lambda { reply(status) })
+        image('http://toothrot.nfshost.com/gutter/icons/arrow_undo.png', :click => lambda { reply(status); app.slot.scroll_top = 0 })
         image('http://toothrot.nfshost.com/gutter/icons/page_edit.png', :click => lambda { ask ("Direct Message #{status.user.screen_name}")})
       end
     end
