@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: should allow multiple accounts
+desc: this is big.
+type: :feature
+component: gutter
+release: 
+reporter: toothrot <scissorjammer@gmail.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-11-07 19:14:06.856633 Z
+references: []
+
+id: 2753f21f9a2cc8abe2fac914a6c9cf08fef56df0
+log_events: 
+- - 2008-11-07 19:14:07.384730 Z
+  - toothrot <scissorjammer@gmail.com>
+  - created
+  - ""
