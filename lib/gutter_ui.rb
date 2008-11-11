@@ -7,13 +7,18 @@ module GutterUI
       result = if (e =~ %r[https?://\S*]) 
         link(e, :click => e)
       elsif (e =~ %r[@\w])
-        link(e, :underline => 'none')
+        link_to_profile(e)
       else
         e
       end
       a << result
       a << ' '
     end
+  end
+  
+  def link_to_profile(reply_to_user)
+    user_id = reply_to_user.delete("@")
+    link(reply_to_user, :underline => 'none').click("http://twitter.com/#{user_id}")
   end
 
   def reply(status)

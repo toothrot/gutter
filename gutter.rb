@@ -6,6 +6,7 @@ require 'yaml'
 require 'lib/gutter'
 require 'lib/gutter_ui'
 require 'lib/notify'
+require 'lib/tiny_url_support'
 
 #this should go away
 cache = File.join(LIB_DIR, "+data")
@@ -20,6 +21,7 @@ end
 Shoes.app :title => 'gutter', :width => 450 do
   extend GutterUI 
   extend Notify
+  extend TinyURLSupport
 
   background black
   stroke white
@@ -33,7 +35,7 @@ Shoes.app :title => 'gutter', :width => 450 do
   @twit = Twitter::Base.new(gtter.user, gtter.password)
   send_tweet = lambda do
     @blag.border white
-    @twit.post(@tweet_text.text)
+    @twit.post(tinify_urls_in_text(@tweet_text.text))
     @tweet_text.text = ''
     timer(5) { @timeline.clear { draw_timeline } }
   end
