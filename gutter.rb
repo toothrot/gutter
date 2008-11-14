@@ -38,7 +38,7 @@ Shoes.app :title => 'gutter', :width => 450 do
 
   send_tweet = lambda do
     @blag.border white
-    @twit.post(tinify_urls_in_text(@tweet_text.text))
+    @twit.post(tinify_urls_in_text(@tweet_text.text), :source => 'gutter')
     @tweet_text.text = ''
     timer(5) { @timeline.clear { draw_timeline } }
   end
