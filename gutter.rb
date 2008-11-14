@@ -18,7 +18,7 @@ class Twitter::Status
   end
 end
 
-Shoes.app :title => 'gutter', :width => 450 do
+Shoes.app :title => 'Gutter', :width => 450 do
   extend GutterUI 
   extend Notify
   extend TinyURLSupport
