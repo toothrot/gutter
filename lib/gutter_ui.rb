@@ -48,7 +48,7 @@ module GutterUI
         para(strong(status.user.name, :stroke => darkorange), :margin => [10,5,5,0])
         inscription(Time.parse(status.created_at).strftime("at %X"), :stroke => gray, :margin => [10,8,0,0])
       end
-      inscription(insert_links(status.text), ' ', :margin => [10,0,0,6], :stroke => white)
+      inscription(insert_links(status.text), ' ', :margin => [10,0,0,6], :stroke => white, :leading => 0)
     end
   end
 
