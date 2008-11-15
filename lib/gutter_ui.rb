@@ -46,7 +46,7 @@ module GutterUI
     stack :width => -80 do
       flow do
         para(strong(status.user.name, :stroke => darkorange), :margin => [10,5,5,0])
-        inscription(Time.parse(status.created_at).strftime("at %I:%M%p"), :stroke => gray, :margin => [10,8,0,0])
+        inscription(Time.parse(status.created_at).strftime("at %I:%M%p").downcase, :stroke => gray, :margin => [10,8,0,0])
       end
       inscription(insert_links(status.text), ' ', :margin => [10,0,0,6], :stroke => white, :leading => 0)
     end
