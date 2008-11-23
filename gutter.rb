@@ -8,7 +8,7 @@ require 'lib/gutter_ui'
 require 'lib/notify'
 require 'lib/tiny_url_support'
 
-#this should go away
+# this should go away
 cache = File.join(LIB_DIR, "+data")
 File.delete(cache) if File.exists?(cache)
 
@@ -18,13 +18,15 @@ class Twitter::Status
   end
 end
 
-Shoes.app :title => 'gutter', :width => 450 do
+Shoes.app :title => 'Gutter', :width => 450 do
   extend GutterUI 
   extend Notify
   extend TinyURLSupport
 
   background black
   stroke white
+
+  ## -- setup
   gtter = Gutter.new
   while gtter.user.blank? || gtter.password.blank?
     gtter.user = ask('Please enter your Twitter Username:')
@@ -33,14 +35,17 @@ Shoes.app :title => 'gutter', :width => 450 do
   gtter.save
   @user = gtter.user
   @twit = Twitter::Base.new(gtter.user, gtter.password)
+
   send_tweet = lambda do
     @blag.border white
-    @twit.post(tinify_urls_in_text(@tweet_text.text))
+    @twit.post(tinify_urls_in_text(@tweet_text.text), :source => 'gutter')
     @tweet_text.text = ''
     timer(5) { @timeline.clear { draw_timeline } }
   end
+  ## - end setup
+
   stack do
-    flow do 
+    flow do # - header
       background '#202020'
       border dimgray
       flow :margin => [5,5,5,0] do
@@ -62,14 +67,18 @@ Shoes.app :title => 'gutter', :width => 450 do
         @counter = strong("140")
         para @counter, :stroke => white
       end
-    end
+    end # - header
+
     @timeline = stack :margin => [0,5,0,0] do
       para "loading"
     end
+
   end
+
   @timeline.clear { draw_timeline }
   every(60*6) do
     @timeline.clear { draw_timeline }
   end
+
 end
 
