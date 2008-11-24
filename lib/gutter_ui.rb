@@ -38,8 +38,6 @@ module GutterUI
   def status_image(status)
     stack :width => 50, :margin => [6,6,2,6] do
       image status.user.profile_image_url if status.user
-      image.hide if image.full_height < 1
-      click { reply(status) }
     end
   end
 
