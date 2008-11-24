@@ -1,5 +1,4 @@
 require 'uri'
-require 'hpricot'
 require 'net/http'
 
 module TinyURLSupport
@@ -12,7 +11,7 @@ module TinyURLSupport
   
 private
   def tiny_url_for(full_url)
-    response = Net::HTTP.post_form(URI.parse('http://tinyurl.com/create.php'), {"url" => full_url})
-    Hpricot(response.body).search("blockquote b")[1].inner_html
+    response = Net::HTTP.post_form(URI.parse('http://tinyurl.com/api-create.php'), {"url" => full_url})
+    response.body
   end
 end

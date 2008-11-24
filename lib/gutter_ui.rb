@@ -38,6 +38,7 @@ module GutterUI
   def status_image(status)
     stack :width => 50, :margin => [6,6,2,6] do
       image status.user.profile_image_url if status.user
+      image.hide if image.full_height < 1
       click { reply(status) }
     end
   end
@@ -56,7 +57,7 @@ module GutterUI
     control = stack :width => 29, :margin => [5,2,2,5] do
       stack :width => '20', :margin => [2,2,0,0] do
         image('http://toothrot.nfshost.com/gutter/icons/arrow_undo.png', :click => lambda { reply(status); app.slot.scroll_top = 0 })
-        image('http://toothrot.nfshost.com/gutter/icons/page_edit.png', :click => lambda { ask ("Direct Message #{status.user.screen_name}")})
+        image('http://toothrot.nfshost.com/gutter/icons/page_edit.png', :click => lambda { ask("Direct Message #{status.user.screen_name}")})
       end
     end
   end
