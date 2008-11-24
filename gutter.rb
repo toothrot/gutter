@@ -9,8 +9,8 @@ require 'lib/notify'
 require 'lib/tiny_url_support'
 
 # this should go away
-#cache = File.join(LIB_DIR, "+data")
-#File.delete(cache) if File.exists?(cache)
+cache = File.join(LIB_DIR, "+data")
+File.delete(cache) if File.exists?(cache)
 
 class Twitter::Status
   def ==(other)
