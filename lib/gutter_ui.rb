@@ -41,21 +41,23 @@ module GutterUI
     end
   end
 
+  def status_time(status)
+    Time.parse(status.created_at).strftime("at %I:%M%p").downcase
+  end
+
   def status_text(status)
     stack :width => -80 do
       flow do
         para(strong(status.user.name, :stroke => darkorange), :margin => [10,5,5,0])
-        inscription(Time.parse(status.created_at).strftime("at %I:%M%p").downcase, :stroke => gray, :margin => [10,8,0,0])
+        inscription(status_time(status), :stroke => gray, :margin => [10,8,0,0])
       end
       inscription(insert_links(status.text), ' ', :margin => [10,0,0,6], :stroke => white, :leading => 0)
     end
   end
 
   def status_controls(status)
-    control = stack :width => 29, :margin => [5,2,2,5] do
-      stack :width => '20', :margin => [2,2,0,0] do
-        image('http://toothrot.nfshost.com/gutter/icons/arrow_undo.png', :click => lambda { reply(status); app.slot.scroll_top = 0 })
-      end
+    stack :width => 29, :margin => [7,5,5,5] do
+      image('http://toothrot.nfshost.com/gutter/icons/arrow_undo.png', :click => lambda { reply(status); app.slot.scroll_top = 0 })
     end
   end
 
