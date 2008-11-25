@@ -42,7 +42,7 @@ module GutterUI
   end
 
   def status_time(status)
-    Time.parse(status.created_at).strftime("at %I:%M%p").downcase
+    Time.parse(status.created_at).strftime("at %I:%M%p").downcase.chop
   end
 
   def status_text(status)
