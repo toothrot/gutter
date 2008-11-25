@@ -51,7 +51,7 @@ Shoes.app :title => 'Gutter', :width => 450, :scroll => false do
   end
 
   flow :attach => Window, :top => 0, :left => 0, :height => 40, :width => width - gutter do # - header
-    background '#202020'
+    background gray(0.2, 0.8)
     border dimgray
     flow :margin => [5,5,5,0] do
       @tweet_text = edit_line("", :width => width - 140) do |e| 
