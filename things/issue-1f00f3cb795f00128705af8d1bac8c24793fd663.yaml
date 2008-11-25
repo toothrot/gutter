@@ -9,8 +9,8 @@ type: :feature
 component: gutter
 release: 
 reporter: toothrot <scissorjammer@gmail.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-11-07 16:45:13.647522 Z
 references: []
 
@@ -19,4 +19,8 @@ log_events:
 - - 2008-11-07 16:45:14.767361 Z
   - toothrot <scissorjammer@gmail.com>
   - created
+  - ""
+- - 2008-11-25 22:12:45.318120 Z
+  - toothrot <scissorjammer@gmail.com>
+  - closed with disposition fixed
   - ""
