@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: should handle timeouts better
+desc: for example, you close your macbook lid and your internet connection cuts out.  then gutter does a nasty timeout trying to connect to twitter during a redraw.  this should happen in the background so we can just say 'loading' or something
+type: :bugfix
+component: gutter
+release: 
+reporter: toothrot <scissorjammer@gmail.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-11-24 20:37:35.976144 Z
+references: []
+
+id: 07bfc9ef131dd26f85710d32dc8a4c079dcc73b7
+log_events: 
+- - 2008-11-24 20:37:36.896055 Z
+  - toothrot <scissorjammer@gmail.com>
+  - created
+  - ""

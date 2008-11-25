@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: counter doesn't reset when clicking 'blag'
+desc: it ought to
+type: :bugfix
+component: gutter
+release: 
+reporter: toothrot <scissorjammer@gmail.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-11-24 20:37:58.912251 Z
+references: []
+
+id: 8be40d84b7deccd6304970cf9c2d31241a789988
+log_events: 
+- - 2008-11-24 20:38:00.056145 Z
+  - toothrot <scissorjammer@gmail.com>
+  - created
+  - ""
