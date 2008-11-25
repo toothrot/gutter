@@ -54,7 +54,7 @@ Shoes.app :title => 'Gutter', :width => 450, :scroll => false do
     background gray(0.2, 0.8)
     border dimgray
     flow :margin => [5,5,5,0] do
-      @tweet_text = edit_line("", :width => width - 140) do |e| 
+      @tweet_text = edit_line("", :width => width - 140 - gutter) do |e| 
         @counter.text =  140 - (e.text.size || 0)
       end
       @blag = stack :width => 40, :margin_left => 4, :margin_right => 4 do
