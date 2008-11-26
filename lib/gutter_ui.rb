@@ -57,7 +57,8 @@ module GutterUI
 
   def status_controls(status)
     stack :width => 29, :margin => [7,5,5,5] do
-      image('http://toothrot.nfshost.com/gutter/icons/arrow_undo.png', :click => lambda { reply(status); app.slot.scroll_top = 0 })
+      image('http://toothrot.nfshost.com/gutter/icons/arrow_undo.png', 
+        :click => lambda { reply(status) })
     end
   end
 
