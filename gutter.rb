@@ -29,64 +29,36 @@ Shoes.app :title => 'Gutter', :width => 450, :scroll => false do
   stroke white
 
   ## -- setup
-  gtter = Gutter.new
-  while gtter.user.blank? || gtter.password.blank?
-    gtter.user = ask('Please enter your Twitter Username:')
-    gtter.password = ask('Please enter your Twitter Password:', :secret => true)
-  end
-  gtter.save
-  @user = gtter.user
-  @twit = Twitter::Base.new(gtter.user, gtter.password)
+  @gtter = Gutter.new
 
-  send_tweet = lambda do
-    @twit.post(tinify_urls_in_text(@tweet_text.text), :source => 'gutter')
-    @tweet_text.text = ''
-    timer(5) { @timeline.clear { draw_timeline } }
-  end
-  ## - end setup
-
-  @timeline = stack :margin => [0,42,0,0] do
-    para "loading"
+  get_auth = lambda do
+    @user = @gtter.user
+    @twit = Twitter::Base.new(@gtter.user, @gtter.password)
   end
 
-  flow :attach => Window, :top => 0, :left => 0, :height => 40, :width => width - gutter do # - header
-    background gray(0.2, 0.8)
-    border dimgray
-    flow :margin => [5,5,5,0] do
-      @tweet_text = edit_line("", :width => width - 140 - gutter) do |e| 
-        @counter.text =  140 - (e.text.size || 0)
+  get_login = lambda do
+    @login = stack :width => 250, :left => width/2 - 250/2, :top => height/2 - 200 do
+      background gray(0.2)
+      border gray(0.6)
+      stack :margin => [20]*4 do
+        user_input = edit_line
+        password_input = edit_line(:secret => true)
+        button "Log In", :click => lambda {
+          @gtter.user = user_input.text
+          @gtter.password = password_input.text
+          if get_auth.call
+            @gtter.save
+            ui_start
+          end
+        }
       end
-      @blag = stack :width => 40, :margin_left => 4, :margin_right => 4 do
-        dark = rect :width => 30, :height => 14, :curve => 4, :top => 4, :fill => gray(0.3), :stroke => gray(0.6)
-        light = rect :width => 30, :height => 14, :curve => 4, :top => 4, :fill => gray(0.3), :stroke => gray(0.9)
-        light.hide
-        inscription 'blag', :font => '9', :stroke => gray(0.8)
-        dark.click { send_tweet.call }
-        dark.hover { light.show }
-        dark.leave { light.hide }
-      end
-      image('http://toothrot.nfshost.com/gutter/icons/arrow_refresh.png', :click => lambda { @timeline.clear { draw_timeline } }, :margin => [5,5,5,5] )
-      para "| ", :stroke => gray
-      @counter = strong("140")
-      para @counter, :stroke => white
     end
-  end # - header
-
-  keypress do |k|
-    send_tweet.call if (k == :enter) || (k == "\n")
-    @timeline.scroll_top += 3 if k == :up
-    @timeline.scroll_top -= 3 if k == :down
   end
 
-
-  @timeline.clear { draw_timeline }
-  every(60*6) do
-    @timeline.clear { draw_timeline }
+  get_login.call
+  if (!@gtter.user.blank? && !@gtter.password.blank?)
+    get_auth.call
+    ui_start
   end
-
-  every(1) do
-    @timeline.style(:height => height - 45)
-  end
-
 end
 

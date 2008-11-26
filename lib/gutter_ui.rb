@@ -78,4 +78,58 @@ module GutterUI
       end # end tweet
     end # end twit
   end
+
+  def ui_start
+    @login.hide if @login
+
+    send_tweet = lambda do
+      @twit.post(tinify_urls_in_text(@tweet_text.text), :source => 'gutter')
+      @tweet_text.text = ''
+      timer(5) { @timeline.clear { draw_timeline } }
+    end
+
+    @timeline = stack do
+      displace(0, -8)
+      para "loading"
+    end
+
+    flow :attach => Window, :top => 0, :left => 0, :height => 40, :width => width - gutter do # - header
+      background gray(0.2, 0.8)
+      border dimgray
+      flow :margin => [5,5,5,0] do
+        @tweet_text = edit_line("", :width => width - 140 - gutter) do |e| 
+          @counter.text =  140 - (e.text.size || 0)
+        end
+        @blag = stack :width => 40, :margin_left => 4, :margin_right => 4 do
+          dark = rect :width => 30, :height => 14, :curve => 4, :top => 4, :fill => gray(0.3), :stroke => gray(0.6)
+          light = rect :width => 30, :height => 14, :curve => 4, :top => 4, :fill => gray(0.3), :stroke => gray(0.9)
+          light.hide
+          inscription 'blag', :font => '9', :stroke => gray(0.8)
+          dark.click { send_tweet.call }
+          dark.hover { light.show }
+          dark.leave { light.hide }
+        end
+        image('http://toothrot.nfshost.com/gutter/icons/arrow_refresh.png', :click => lambda { @timeline.clear { draw_timeline } }, :margin => [5,5,5,5] )
+        para "| ", :stroke => gray
+        @counter = strong("140")
+        para @counter, :stroke => white
+      end
+    end # - header
+
+    keypress do |k|
+      send_tweet.call if (k == :enter) || (k == "\n")
+      @timeline.scroll_top += 3 if k == :up
+      @timeline.scroll_top -= 3 if k == :down
+    end
+
+
+    @timeline.clear { draw_timeline }
+    every(60*6) do
+      @timeline.clear { draw_timeline }
+    end
+
+    every(1) do
+      @timeline.style(:height => height - 45)
+    end
+  end
 end
