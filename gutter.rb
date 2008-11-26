@@ -39,7 +39,6 @@ Shoes.app :title => 'Gutter', :width => 450, :scroll => false do
   @twit = Twitter::Base.new(gtter.user, gtter.password)
 
   send_tweet = lambda do
-    @blag.border white
     @twit.post(tinify_urls_in_text(@tweet_text.text), :source => 'gutter')
     @tweet_text.text = ''
     timer(5) { @timeline.clear { draw_timeline } }
@@ -58,13 +57,13 @@ Shoes.app :title => 'Gutter', :width => 450, :scroll => false do
         @counter.text =  140 - (e.text.size || 0)
       end
       @blag = stack :width => 40, :margin_left => 4, :margin_right => 4 do
-        background '#303030'
-        border dimgray
-        inscription "blag", :margin => [4]*4, :stroke => white
-        hover { @blag.border gray }
-        leave { @blag.border dimgray }
-        click { send_tweet.call }
-        release { @blag.border gray }
+        dark = rect :width => 30, :height => 14, :curve => 4, :top => 4, :fill => gray(0.3), :stroke => gray(0.6)
+        light = rect :width => 30, :height => 14, :curve => 4, :top => 4, :fill => gray(0.3), :stroke => gray(0.9)
+        light.hide
+        inscription 'blag', :font => '9', :stroke => gray(0.8)
+        dark.click { send_tweet.call }
+        dark.hover { light.show }
+        dark.leave { light.hide }
       end
       image('http://toothrot.nfshost.com/gutter/icons/arrow_refresh.png', :click => lambda { @timeline.clear { draw_timeline } }, :margin => [5,5,5,5] )
       para "| ", :stroke => gray
