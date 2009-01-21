@@ -1,8 +1,10 @@
 Shoes.setup do
   gem 'twitter'
+  gem 'htmlentities'
 end
 require 'twitter'
 require 'yaml'
+require 'htmlentities'
 require 'lib/gutter'
 require 'lib/gutter_ui'
 require 'lib/notify'
