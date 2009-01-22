@@ -95,8 +95,7 @@ module GutterUI
 
   def draw_settings
     stack do
-      para 'User', :stroke => white
-      para 'Password', :stroke => white
+      @get_login.call
       button("Go Back") do
         @timeline.clear { draw_timeline }
       end

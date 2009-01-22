@@ -35,7 +35,7 @@ Shoes.app :title => 'Gutter', :width => 450, :scroll => false do
       :user => @gtter.user, :password => @gtter.password)
   end
 
-  get_login = lambda do
+  @get_login = lambda do
     @login = stack :width => 250, :left => width/2 - 250/2, :top => height/2 - 200 do
       background gray(0.2), :curve => 10
       border gray(0.6), :curve => 10
@@ -61,7 +61,7 @@ Shoes.app :title => 'Gutter', :width => 450, :scroll => false do
     end
   end
 
-  get_login.call
+  @get_login.call
   begin
     get_auth.call
     ui_start

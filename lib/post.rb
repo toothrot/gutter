@@ -9,6 +9,10 @@ class Post
   def ==(other)
     (self.text == other.text) && (self.user.name == other.user.name)
   end
+
+  def <=>(other)
+    self.created_at <=> other.created_at
+  end
 end
 
 class User
