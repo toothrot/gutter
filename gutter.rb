@@ -1,24 +1,20 @@
 Shoes.setup do
-  gem 'twitter'
+  gem 'httparty'
   gem 'htmlentities'
 end
-require 'twitter'
+require 'httparty'
 require 'yaml'
 require 'htmlentities'
 require 'lib/gutter'
 require 'lib/gutter_ui'
+require 'lib/post'
+require 'lib/accounts/twitter'
 require 'lib/notify'
 require 'lib/tiny_url_support'
 
 # this should go away
 cache = File.join(LIB_DIR, "+data")
 File.delete(cache) if File.exists?(cache)
-
-class Twitter::Status
-  def ==(other)
-    self.id == other.id
-  end
-end
 
 Shoes.app :title => 'Gutter', :width => 450, :scroll => false do
   extend GutterUI 
@@ -35,7 +31,8 @@ Shoes.app :title => 'Gutter', :width => 450, :scroll => false do
 
   get_auth = lambda do
     @user = @gtter.user
-    @twit = Twitter::Base.new(@gtter.user, @gtter.password)
+    @twit = TwitterAccount.new(
+      :user => @gtter.user, :password => @gtter.password)
   end
 
   get_login = lambda do

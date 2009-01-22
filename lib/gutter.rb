@@ -1,6 +1,5 @@
 class Gutter
-  attr_accessor :user
-  attr_accessor :password
+  attr_accessor :user, :password
 
   def initialize
     @filename = File.join("#{ENV['HOME'] || ENV['USERPROFILE']}",'.gutter.yml')

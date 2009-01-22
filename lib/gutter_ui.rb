@@ -25,6 +25,20 @@ module GutterUI
     @tweet_text.text = "@#{status.user.screen_name} "
   end
 
+  def gray_button(text, click_proc)
+    stack :width => 40, :margin_left => 4, :margin_right => 4, :scroll => false, :height => 15 do
+      dark = rect(:width => 30, :height => 14, :curve => 4,
+        :fill => gray(0.3), :stroke => gray(0.6))
+      light = rect(:width => 30, :height => 14, :curve => 4,
+        :fill => gray(0.3), :stroke => gray(0.9))
+      light.hide
+      inscription text, :font => '9', :stroke => gray(0.8), :margin_top => 0
+      dark.click { click_proc.call }
+      dark.hover { light.show }
+      dark.leave { light.hide }
+    end
+  end
+
   def status_background(status)
     if status.text =~ %r[@#{@user}]
       background '#303030', :curve => 10
@@ -37,7 +51,7 @@ module GutterUI
 
   def status_image(status)
     stack :width => 50, :margin => [6,6,2,6] do
-      image status.user.profile_image_url if status.user
+      image status.user.image_url if status.user
     end
   end
 
@@ -79,11 +93,21 @@ module GutterUI
     end # end twit
   end
 
+  def draw_settings
+    stack do
+      para 'User', :stroke => white
+      para 'Password', :stroke => white
+      button("Go Back") do
+        @timeline.clear { draw_timeline }
+      end
+    end
+  end
+
   def ui_start
     @login.hide if @login
 
     send_tweet = lambda do
-      @twit.post(tinify_urls_in_text(@tweet_text.text), :source => 'gutter')
+      @twit.post(tinify_urls_in_text(@tweet_text.text))
       @tweet_text.text = ''
       timer(5) { @timeline.clear { draw_timeline } }
     end
@@ -93,26 +117,21 @@ module GutterUI
       para "loading"
     end
 
-    flow :attach => Window, :top => 0, :left => 0, :height => 40, :margin_right => gutter do # - header
+    flow :attach => Window, :top => 0, :left => 0, :height => 42, :margin_right => gutter do # - header
       background gray(0.2, 0.8)
       border dimgray
       flow :margin => [5,5,5,0] do
         @tweet_text = edit_line("", :width => width - 140 - gutter) do |e| 
           @counter.text =  140 - (e.text.size || 0)
         end
-        @blag = stack :width => 40, :margin_left => 4, :margin_right => 4 do
-          dark = rect :width => 30, :height => 14, :curve => 4, :top => 4, :fill => gray(0.3), :stroke => gray(0.6)
-          light = rect :width => 30, :height => 14, :curve => 4, :top => 4, :fill => gray(0.3), :stroke => gray(0.9)
-          light.hide
-          inscription 'blag', :font => '9', :stroke => gray(0.8)
-          dark.click { send_tweet.call }
-          dark.hover { light.show }
-          dark.leave { light.hide }
+        stack :width => 40 do
+          @blag = gray_button('blag', send_tweet)
+          @counter = strong("140")
+          inscription @counter, :stroke => white, :margin => [8,0,0,0]
         end
-        image('http://toothrot.nfshost.com/gutter/icons/arrow_refresh.png', :click => lambda { @timeline.clear { draw_timeline } }, :margin => [5,5,5,5] )
         para "| ", :stroke => gray
-        @counter = strong("140")
-        para @counter, :stroke => white
+        image('http://toothrot.nfshost.com/gutter/icons/arrow_refresh.png', :click => lambda { @timeline.clear { draw_timeline } }, :margin => [5,5,5,5] )
+        image('http://toothrot.nfshost.com/gutter/icons/cog.png', :click => lambda { @timeline.clear { draw_settings } }, :margin => [5,5,5,5] )
       end
     end # - header
 
