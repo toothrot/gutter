@@ -80,7 +80,7 @@ module GutterUI
     statuses = @twit.timeline(:friends)
     notify(@which,statuses)
     statuses.each do |status|
-      tweet = flow :margin => [5,4,20,4] do
+      tweet = flow :margin => [5,4,gutter,4] do
         status_background(status)
         status_image(status)
         status_text(status)
@@ -93,61 +93,93 @@ module GutterUI
     end # end twit
   end
 
+  def get_login
+    @login = stack :width => 250, :left => width/2 - 250/2, :top => height/2 - 200 do
+      background gray(0.2), :curve => 10
+      border gray(0.6), :curve => 10
+      failed = para('', :stroke => red).hide
+      logo = image "http://assets1.twitter.com/images/twitter_logo_s.png"
+      stack :margin => [20]*4 do
+        user_input = edit_line
+        password_input = edit_line(:secret => true)
+        button "Log In" do
+          @gtter.user = user_input.text
+          @gtter.password = password_input.text
+          @gtter.save
+          if get_auth.authorized
+            info @twit.inspect
+            ui_start
+          else
+            failed.text = 'Failed...'
+            failed.show
+          end
+        end
+      end
+    end
+  end
+
+  def get_auth
+    @user = @gtter.user
+    @twit = TwitterAccount.new(
+      :user => @gtter.user, :password => @gtter.password)
+  end
+
   def draw_settings
-    stack do
-      @get_login.call
-      button("Go Back") do
-        @timeline.clear { draw_timeline }
+    app.slot.clear do
+      stack do
+        get_login
+        button("Go Back") do
+          ui_start
+        end
       end
     end
   end
 
   def ui_start
-    @login.hide if @login
+    app.slot.clear do
+      background black
+      stroke white
 
-    send_tweet = lambda do
-      @twit.post(tinify_urls_in_text(@tweet_text.text))
-      @tweet_text.text = ''
-      timer(5) { @timeline.clear { draw_timeline } }
-    end
-
-    @timeline = stack do
-      displace(0, -8)
-      para "loading"
-    end
-
-    flow :attach => Window, :top => 0, :left => 0, :height => 42, :margin_right => gutter do # - header
-      background gray(0.2, 0.8)
-      border dimgray
-      flow :margin => [5,5,5,0] do
-        @tweet_text = edit_line("", :width => width - 140 - gutter) do |e| 
-          @counter.text =  140 - (e.text.size || 0)
-        end
-        stack :width => 40 do
-          @blag = gray_button('blag', send_tweet)
-          @counter = strong("140")
-          inscription @counter, :stroke => white, :margin => [8,0,0,0]
-        end
-        para "| ", :stroke => gray
-        image('http://toothrot.nfshost.com/gutter/icons/arrow_refresh.png', :click => lambda { @timeline.clear { draw_timeline } }, :margin => [5,5,5,5] )
-        image('http://toothrot.nfshost.com/gutter/icons/cog.png', :click => lambda { @timeline.clear { draw_settings } }, :margin => [5,5,5,5] )
+      send_tweet = lambda do
+        @twit.post(tinify_urls_in_text(@tweet_text.text))
+        @tweet_text.text = ''
+        timer(5) { @timeline.clear { draw_timeline } }
       end
-    end # - header
 
-    keypress do |k|
-      send_tweet.call if (k == :enter) || (k == "\n")
-      @timeline.scroll_top += 3 if k == :up
-      @timeline.scroll_top -= 3 if k == :down
-    end
+      @timeline = stack :margin_top => 50 do
+        displace(0, -8)
+        para "loading"
+      end
+
+      flow :attach => Window, :top => 0, :left => 0, :height => 42, :margin_right => gutter do # - header
+        background gray(0.2, 0.8)
+        border dimgray
+        flow :margin => [5,5,5,0] do
+          @tweet_text = edit_line("", :width => width - 140 - gutter) do |e| 
+            @counter.text =  140 - (e.text.size || 0)
+          end
+          stack :width => 40 do
+            @blag = gray_button('blag', send_tweet)
+            @counter = strong("140")
+            inscription @counter, :stroke => white, :margin => [8,0,0,0]
+          end
+          para "| ", :stroke => gray
+          image('http://toothrot.nfshost.com/gutter/icons/arrow_refresh.png', :click => lambda { @timeline.clear { draw_timeline } }, :margin => [5,5,5,5] )
+          image('http://toothrot.nfshost.com/gutter/icons/cog.png', :click => lambda { @timeline.clear { draw_settings } }, :margin => [5,5,5,5] )
+        end
+      end # - header
+
+      keypress do |k|
+        send_tweet.call if (k == :enter) || (k == "\n")
+        @timeline.scroll_top += 3 if k == :up
+        @timeline.scroll_top -= 3 if k == :down
+      end
 
 
-    @timeline.clear { draw_timeline }
-    every(60*6) do
       @timeline.clear { draw_timeline }
-    end
-
-    every(1) do
-      @timeline.style(:height => height - 45)
+      every(60*6) do
+        @timeline.clear { draw_timeline }
+      end
     end
   end
 end

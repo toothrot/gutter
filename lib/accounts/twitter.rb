@@ -2,10 +2,17 @@ class TwitterAccount
   include HTTParty
   format :json
   base_uri 'twitter.com'
-  attr_accessor :username, :password
+  attr_accessor :username, :password, :authorized
 
   def initialize(opts)
     @auth = {:username => opts[:user], :password => opts[:password]}
+
+    begin
+    self.class.get('http://twitter.com/account/verify_credentials.json', :basic_auth => @auth)
+    @authorized = true
+    rescue => e
+      @authorized = false
+    end
   end
 
   def post(text)
