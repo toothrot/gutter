@@ -21,7 +21,7 @@ class TwitterAccount
   end
 
   def timeline(which = :friends, options = {})
-    options.merge!({:basic_auth => @auth})
+    options.merge!({:basic_auth => @auth, :source => 'gutter'})
     twits = self.class.get("/statuses/#{which}_timeline.json", options)
     twits.inject([]) { |memo, twit| memo << Post.new(twit) }
   end
