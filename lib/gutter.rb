@@ -36,6 +36,9 @@ class Gutter
   def self.get_conf
     @filename = File.join("#{ENV['HOME'] || ENV['USERPROFILE']}",'.gutter.yml')
     @conf = YAML::load_file(@filename)
+  rescue
+    @conf = {}
+    @conf["gutter"] = {} unless @conf["gutter"]
   end
 
 end
