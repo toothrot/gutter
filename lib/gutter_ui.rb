@@ -100,8 +100,8 @@ module GutterUI
       failed = para('', :stroke => red).hide
       logo = image "http://assets1.twitter.com/images/twitter_logo_s.png"
       stack :margin => [20]*4 do
-        user_input = edit_line
-        password_input = edit_line(:secret => true)
+        user_input = edit_line(:text => @gtter.user)
+        password_input = edit_line(:secret => true,:text => @gtter.password)
         button "Log In" do
           @gtter.user = user_input.text
           @gtter.password = password_input.text
