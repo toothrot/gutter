@@ -1,7 +1,6 @@
 module GutterUI
   def insert_links(str)
-    entities = HTMLEntities.new
-    decoded = entities.decode(str)
+    decoded = HTMLEntities.new.decode(str)
 
     decoded.split.inject([]) do |a,e|
       result = if (e =~ %r[https?://\S*]) 
