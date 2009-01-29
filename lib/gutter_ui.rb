@@ -84,10 +84,6 @@ module GutterUI
         status_image(status)
         status_text(status)
         control = status_controls(status)
-        control.hide
-
-        hover { control.show }
-        leave { control.hide }
       end # end tweet
     end # end twit
   end
