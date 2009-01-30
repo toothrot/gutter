@@ -1,7 +1,6 @@
 module GutterUI
   def insert_links(str)
-    entities = HTMLEntities.new
-    decoded = entities.decode(str)
+    decoded = HTMLEntities.new.decode(str)
 
     decoded.split.inject([]) do |a,e|
       result = if (e =~ %r[https?://\S*]) 
@@ -60,7 +59,7 @@ module GutterUI
   end
 
   def status_text(status)
-    stack :width => -80 do
+    stack :width => -77 do
       flow do
         para(strong(status.user.name, :stroke => darkorange), :margin => [10,5,5,0])
         inscription(status_time(status), :stroke => gray, :margin => [10,8,0,0])
@@ -70,7 +69,7 @@ module GutterUI
   end
 
   def status_controls(status)
-    stack :width => 29, :margin => [7,5,5,5] do
+    stack :width => 22, :margin => [7,5,7,5] do
       image('http://toothrot.nfshost.com/gutter/icons/arrow_undo.png', 
         :click => lambda { reply(status) })
     end
@@ -85,10 +84,6 @@ module GutterUI
         status_image(status)
         status_text(status)
         control = status_controls(status)
-        control.hide
-
-        hover { control.show }
-        leave { control.hide }
       end # end tweet
     end # end twit
   end
@@ -171,10 +166,9 @@ module GutterUI
 
       keypress do |k|
         send_tweet.call if (k == :enter) || (k == "\n")
-        @timeline.scroll_top += 3 if k == :up
-        @timeline.scroll_top -= 3 if k == :down
+        @timeline.scroll_top -= 50 if k == :up
+        @timeline.scroll_top += 50 if k == :down
       end
-
 
       @timeline.clear { draw_timeline }
       every(60*6) do
