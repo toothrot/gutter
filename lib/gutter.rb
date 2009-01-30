@@ -28,7 +28,7 @@ class Gutter
     Gutter.load_conf
     @conf["gutter"]["login"] = user
     @conf["gutter"]["password"] = password
-    YAML::dump(@conf.to_yaml, File.open(@filename, 'w'))
+    YAML::dump(@conf, File.open(@filename, 'w'))
   rescue
     puts "Can't open preferences file"
   end
