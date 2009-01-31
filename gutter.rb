@@ -16,7 +16,7 @@ require 'lib/tiny_url_support'
 cache = File.join(LIB_DIR, "+data")
 File.delete(cache) if File.exists?(cache)
 
-Shoes.app :title => 'Gutter',:width => Gutter.width || 400, :scroll => false do
+Shoes.app :title => 'Gutter',:width => 400, :scroll => false do
   extend GutterUI 
   extend Notify
   extend TinyURLSupport

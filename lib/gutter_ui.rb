@@ -41,10 +41,10 @@ module GutterUI
   def status_background(status)
     if status.text =~ %r[@#{@user}]
       background '#303030', :curve => 10
-      border gray, :curve => 10
+      border gray, :curve => 10, :strokewidth => 2
     else 
       background '#202020', :curve => 10
-      border (status.user.screen_name == @user) ? darkslateblue : '#303030', :curve => 10
+      border (status.user.screen_name == @user) ? darkslateblue : '#303030', :curve => 10, :strokewidth => 2
     end
   end
 
