@@ -11,6 +11,7 @@ require 'lib/post'
 require 'lib/accounts/twitter'
 require 'lib/notify'
 require 'lib/tiny_url_support'
+font 'vendor/fonts/coolvetica.ttf'
 
 # this should go away
 cache = File.join(LIB_DIR, "+data")
