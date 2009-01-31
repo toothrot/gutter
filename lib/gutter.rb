@@ -11,8 +11,19 @@ class Gutter
   end
 
   def save
-    YAML::dump({'gutter' => {'login' => user, 'password' => password}}, 
-      File.open(@filename, 'w'))
+    Gutter.save( @user, @password)
+  end
+
+  def self.load_conf
+    @conf = nil unless defined?(@conf)
+    Gutter.get_conf unless @conf
+  end
+
+  def self.save user,password
+    Gutter.load_conf
+    @conf["gutter"]["login"] = user
+    @conf["gutter"]["password"] = password
+    YAML::dump(@conf, File.open(@filename, 'w'))
   rescue
     puts "Can't open preferences file"
   end
