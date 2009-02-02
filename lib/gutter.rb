@@ -34,7 +34,7 @@ class Gutter
   end
 
   def self.get_conf
-    @filename = File.join("#{ENV['HOME'] || ENV['USERPROFILE']}",'.gutter.yml')
+    @filename = File.join("#{ENV['HOME'] || ENV['USERPROFILE'] || ENV['HOMEPATH']}",'.gutter.yml')
     @conf = YAML::load_file(@filename)
   rescue
     @conf = {}
