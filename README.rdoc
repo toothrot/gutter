@@ -6,7 +6,7 @@ Gutter is a free Twitter client written in Shoes for Ruby (http://www.shoooes.ne
 
 I wrote this to better understand shoes, and more importantly, packaging applications with shoes.
 
-the exact same codebase works in linux, macos, and hopefully, eventually windows.
+the exact same codebase works in linux, macos, and hopefully windows.
 
 ==how
 
@@ -16,21 +16,21 @@ get shoes from http://www.shoooes.net
 
 Then click your way to gutter.rb
 
-or if you downloaded a build
-
-  linux: bash gutter.run
-  mac: pretty normal
-  windows: good luck
+Check out the potsts on http://www.toothrot.net/projects/Gutter.html
 
 ==Things
 
-  * *Use At least shoes r1057*
-  * Growl/Libnotify: install "growlnotify" or "notify-send".
+  * Use Shoes 2 from http://www.shoooes.net
+  * Growl/Libnotify: install "growlnotify" or "notify-send" (if you want it).
+  * Windows support coming soon.
 
 ==TODO
 
-  * Scrolling hides the input box/clicking reply doesn't move to top
+  * settings screen
   * Direct messaging needs to work.
+  * add images to growl/libnotify
+  * multiple accounts
+  * handle failed connections/timeouts better
 
 ==Also
 
