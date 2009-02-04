@@ -89,24 +89,26 @@ module GutterUI
   end
 
   def get_login
-    @login = stack :width => 250, :left => width/2 - 250/2, :top => height/2 - 200 do
-      background gray(0.2), :curve => 10
-      border gray(0.6), :curve => 10
-      failed = para('', :stroke => red).hide
-      logo = image "http://assets1.twitter.com/images/twitter_logo_s.png"
-      stack :margin => [20]*4 do
-        user_input = edit_line(:text => @gtter.user)
-        password_input = edit_line(:secret => true,:text => @gtter.password)
-        button "Log In" do
-          @gtter.user = user_input.text
-          @gtter.password = password_input.text
-          @gtter.save
-          if get_auth.authorized
-            info @twit.inspect
-            ui_start
-          else
-            failed.text = 'Failed...'
-            failed.show
+    @content.clear do
+      @login = stack :width => 250, :left => width/2 - 250/2, :top => height/2 - 200 do
+        background gray(0.2), :curve => 10
+        border gray(0.6), :curve => 10
+        failed = para('', :stroke => red).hide
+        logo = image "http://assets1.twitter.com/images/twitter_logo_s.png"
+        stack :margin => [20]*4 do
+          user_input = edit_line(:text => @gtter.user)
+          password_input = edit_line(:secret => true,:text => @gtter.password)
+          button "Log In" do
+            @gtter.user = user_input.text
+            @gtter.password = password_input.text
+            @gtter.save
+            if get_auth.authorized
+              info @twit.inspect
+              ui_start
+            else
+              failed.text = 'Failed...'
+              failed.show
+            end
           end
         end
       end
@@ -120,7 +122,7 @@ module GutterUI
   end
 
   def draw_settings
-    app.slot.clear do
+    @content.clear do
       stack do
         get_login
         button("Go Back") do
@@ -131,7 +133,7 @@ module GutterUI
   end
 
   def ui_start
-    app.slot.clear do
+    @content.clear do
       background black
       stroke white
 

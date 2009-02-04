@@ -30,6 +30,7 @@ Shoes.app :title => 'Gutter',:width => 400, :scroll => false do
   ## -- setup
   @gtter = Gutter.new 
 
+  @content = stack
   get_login
 end
 
