@@ -1,11 +1,14 @@
+require 'hpricot'
 module GutterUI
   def insert_links(str)
     decoded = HTMLEntities.new.decode(str)
 
     decoded.split.inject([]) do |a,e|
-      result = if (e =~ %r[https?://\S*]) 
+      result = if(e =~ %r[https?://twitpic.com.*])
+        link(e) { do_twitpic(e.delete(',')) }
+      elsif(e =~ %r[https?://\S*])
         link(e, :click => e)
-      elsif (e =~ %r[@\w])
+      elsif(e =~ %r[@\w])
         link_to_profile(e)
       else
         e
@@ -14,7 +17,18 @@ module GutterUI
       a << ' '
     end
   end
-  
+
+  def do_twitpic(url)
+    window(:title => 'twitpic') do
+      background black
+      @loading = title 'Loading...', :stroke => white
+      download url do |dump|
+        image("http://twitpic.com/#{Hpricot(dump.response.body).at('#pic').get_attribute('src')}")
+        @loading.remove
+      end
+    end
+  end
+
   def link_to_profile(reply_to_user)
     user_id = reply_to_user.delete("@:")
     link(reply_to_user, :underline => 'none').click("http://twitter.com/#{user_id}")
@@ -103,7 +117,6 @@ module GutterUI
             @gtter.password = password_input.text
             @gtter.save
             if get_auth.authorized
-              info @twit.inspect
               ui_start
             else
               failed.text = 'Failed...'
@@ -148,19 +161,26 @@ module GutterUI
         para "loading"
       end
 
-      flow :attach => Window, :top => 0, :left => 0, :height => 42, :margin_right => gutter do # - header
+      #header
+      flow(:attach => Window, :top => 0, :left => 0, :height => 42, :margin_right => gutter) do
         background gray(0.2, 0.8)
         border dimgray
         flow :margin => [5,5,5,0] do
+
+          # Input
           @tweet_text = edit_line("", :width => width - 140 - gutter) do |e| 
             @counter.text =  140 - (e.text.size || 0)
           end
+
+          # blag/counter
           stack :width => 40 do
             @blag = gray_button('blag', send_tweet)
             @counter = strong("140")
             inscription @counter, :stroke => white, :margin => [8,0,0,0]
           end
           para "| ", :stroke => gray
+
+          # controls
           image('http://toothrot.nfshost.com/gutter/icons/arrow_refresh.png', :click => lambda { @timeline.clear { draw_timeline } }, :margin => [5,5,5,5] )
           image('http://toothrot.nfshost.com/gutter/icons/cog.png', :click => lambda { @timeline.clear { draw_settings } }, :margin => [5,5,5,5] )
         end
