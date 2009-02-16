@@ -1,4 +1,4 @@
-class Gutter
+class GutterConfig
   FILENAME = File.join("#{ENV['HOME'] || ENV['USERPROFILE'] || ENV['HOMEPATH']}",'.gutter.yml')
   attr_accessor :user, :password, :ignores
 
@@ -7,13 +7,13 @@ class Gutter
   end
 
   def save
-    File.open(Gutter::FILENAME, 'w') do |out|
+    File.open(GutterConfig::FILENAME, 'w') do |out|
       YAML::dump(self, out)
     end
   end
 
   def self.get_conf
-    YAML::load_file(Gutter::FILENAME)
+    YAML::load_file(GutterConfig::FILENAME)
    rescue
     nil
   end

@@ -5,8 +5,9 @@ end
 require 'httparty'
 require 'yaml'
 require 'htmlentities'
-require 'lib/gutter'
-require 'lib/gutter_ui'
+require 'lib/config'
+require 'lib/ui/timeline_ui'
+require 'lib/ui/gutter_ui'
 require 'lib/post'
 require 'lib/accounts/twitter'
 require 'lib/notify'
@@ -28,7 +29,7 @@ Shoes.app :title => 'Gutter',:width => 400, :scroll => false do
   stroke white
 
   ## -- setup
-  @gtter = Gutter.get_conf || Gutter.new 
+  @config = GutterConfig.get_conf || GutterConfig.new 
 
   @content = stack
   get_login
