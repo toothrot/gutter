@@ -17,7 +17,7 @@ class TwitterAccount
 
   def post(text)
     options = {
-        :query => {:status => text}, :basic_auth => @auth, :source => 'gutter' }
+        :query => {:status => text, :source => 'gutter'}, :basic_auth => @auth
     self.class.post('/statuses/update.json', options)
   end
 
