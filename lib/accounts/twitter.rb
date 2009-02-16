@@ -16,13 +16,15 @@ class TwitterAccount
   end
 
   def post(text)
-    options = { :query => {:status => text}, :basic_auth => @auth }
+    options = {
+        :query => {:status => text}, :basic_auth => @auth, :source => 'gutter' }
     self.class.post('/statuses/update.json', options)
   end
 
   def timeline(which = :friends, options = {})
-    options.merge!({:basic_auth => @auth, :source => 'gutter'})
-    twits = self.class.get("/statuses/#{which}_timeline.json", options)
+    options.merge!({:basic_auth => @auth})
+    page = options[:page] || 1
+    twits = self.class.get("/statuses/#{which}_timeline.json?page=#{page}", options)
     twits.inject([]) { |memo, twit| memo << Post.new(twit) }
   end
 

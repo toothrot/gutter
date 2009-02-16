@@ -10,6 +10,20 @@ module TimelineUI
     end
   end
 
+  def gray_button(text, click_proc)
+    stack :width => 40, :margin_left => 4, :margin_right => 4, :scroll => false, :height => 15 do
+      dark = rect(:width => 30, :height => 14, :curve => 4,
+        :fill => gray(0.3), :stroke => gray(0.6))
+      light = rect(:width => 30, :height => 14, :curve => 4,
+        :fill => gray(0.3), :stroke => gray(0.9))
+      light.hide
+      inscription text, :font => '9', :stroke => gray(0.8), :margin_top => 0
+      dark.click { click_proc.call }
+      dark.hover { light.show }
+      dark.leave { light.hide }
+    end
+  end
+
   def link_to_profile(reply_to_user)
     user_id = reply_to_user.delete("@:")
     link(reply_to_user, :underline => 'none').click("http://twitter.com/#{user_id}")
@@ -74,8 +88,8 @@ module TimelineUI
     end
   end
 
-  def draw_timeline
-    statuses = @twit.timeline(:friends)
+  def draw_timeline(page = 1)
+    statuses = @twit.timeline(:friends, :page => page)
     notify(@which,statuses)
     statuses.each do |status|
       unless @config.ignores.include? status.user.name
@@ -87,19 +101,12 @@ module TimelineUI
         end # end tweet
       end
     end # end twit
-  end
-
-  def gray_button(text, click_proc)
-    stack :width => 40, :margin_left => 4, :margin_right => 4, :scroll => false, :height => 15 do
-      dark = rect(:width => 30, :height => 14, :curve => 4,
-        :fill => gray(0.3), :stroke => gray(0.6))
-      light = rect(:width => 30, :height => 14, :curve => 4,
-        :fill => gray(0.3), :stroke => gray(0.9))
-      light.hide
-      inscription text, :font => '9', :stroke => gray(0.8), :margin_top => 0
-      dark.click { click_proc.call }
-      dark.hover { light.show }
-      dark.leave { light.hide }
+    @more = flow :margin => [5,4,gutter+5,4] do
+      background @config.status_background, :curve => 10
+      para(link('load more', :click => lambda {
+          @more.hide;
+          @timeline.append { draw_timeline(page+1) }
+        }), :stroke => white, :align => 'center')
     end
   end
 

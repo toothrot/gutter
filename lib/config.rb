@@ -18,4 +18,8 @@ class GutterConfig
     nil
   end
 
+  def status_background
+    "#202020"
+  end
+
 end
