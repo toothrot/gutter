@@ -5,16 +5,17 @@ end
 require 'httparty'
 require 'yaml'
 require 'htmlentities'
+require 'lib/user'
+require 'lib/post'
 require 'lib/config'
 require 'lib/ui/timeline_ui'
 require 'lib/ui/gutter_ui'
-require 'lib/post'
+require 'lib/ui/notify'
 require 'lib/accounts/twitter'
-require 'lib/notify'
-require 'lib/tiny_url_support'
+require 'lib/helpers/tiny_url_support'
 font 'vendor/fonts/coolvetica.ttf'
 
-# this should go away
+# this should go away, but caching is broken in Ubuntu 8.10
 cache = File.join(LIB_DIR, "+data")
 File.delete(cache) if File.exists?(cache)
 
