@@ -25,4 +25,10 @@ class TwitterAccount
     twits = self.class.get("/statuses/#{which}_timeline.json", options)
     twits.inject([]) { |memo, twit| memo << Post.new(twit) }
   end
+
+  def friends
+    options = {:basic_auth => @auth}
+    friends = self.class.get("/statuses/friends.json", options)
+    friends.inject([]) { |memo, friend| memo << User.new(friend) }
+  end
 end

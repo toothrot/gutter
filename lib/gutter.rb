@@ -1,44 +1,21 @@
 class Gutter
-  attr_accessor :user, :password
+  FILENAME = File.join("#{ENV['HOME'] || ENV['USERPROFILE'] || ENV['HOMEPATH']}",'.gutter.yml')
+  attr_accessor :user, :password, :ignores
 
   def initialize
-    @user = Gutter.login
-    @password = Gutter.password
-  end
-
-  def destroy
-    save
-  end
-
-  def self.method_missing m,*args
-    Gutter.load_conf
-    return @conf["gutter"][m.to_s] if @conf["gutter"]
+    @ignores = []
   end
 
   def save
-    Gutter.save( @user, @password)
-  end
-
-  def self.load_conf
-    @conf = nil unless defined?(@conf)
-    Gutter.get_conf unless @conf
-  end
-
-  def self.save user,password
-    Gutter.load_conf
-    @conf["gutter"]["login"] = user
-    @conf["gutter"]["password"] = password
-    YAML::dump(@conf, File.open(@filename, 'w'))
-  rescue
-    puts "Can't open preferences file"
+    File.open(Gutter::FILENAME, 'w') do |out|
+      YAML::dump(self, out)
+    end
   end
 
   def self.get_conf
-    @filename = File.join("#{ENV['HOME'] || ENV['USERPROFILE'] || ENV['HOMEPATH']}",'.gutter.yml')
-    @conf = YAML::load_file(@filename)
-  rescue
-    @conf = {}
-    @conf["gutter"] = {} unless @conf["gutter"]
+    YAML::load_file(Gutter::FILENAME)
+   rescue
+    nil
   end
 
 end

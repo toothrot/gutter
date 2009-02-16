@@ -93,12 +93,14 @@ module GutterUI
     statuses = @twit.timeline(:friends)
     notify(@which,statuses)
     statuses.each do |status|
-      tweet = flow :margin => [5,4,gutter + 5,4] do
-        status_background(status)
-        status_image(status)
-        status_text(status)
-        control = status_controls(status)
-      end # end tweet
+      unless @gtter.ignores.include? status.user.name
+        tweet = flow :margin => [5,4,gutter + 5,4] do
+          status_background(status)
+          status_image(status)
+          status_text(status)
+          control = status_controls(status)
+        end # end tweet
+      end
     end # end twit
   end
 
@@ -111,7 +113,7 @@ module GutterUI
         logo = image "http://assets1.twitter.com/images/twitter_logo_s.png"
         stack :margin => [20]*4 do
           user_input = edit_line(:text => @gtter.user)
-          password_input = edit_line(:secret => true,:text => @gtter.password)
+          password_input = edit_line(:secret => true, :text => @gtter.password)
           button "Log In" do
             @gtter.user = user_input.text
             @gtter.password = password_input.text
@@ -136,10 +138,22 @@ module GutterUI
 
   def draw_settings
     @content.clear do
-      stack do
+      stack(:margin => [4]*4) do
+        background gray(0.2), :curve => 10
+        border gray(0.6), :curve => 10
+        tagline "Settings", :stroke => white
         get_login
-        button("Go Back") do
-          ui_start
+        stack(:margin => [8]*4) do
+          para 'Ignore: ', :stroke => white
+          flow do
+            list_box(:items => @twit.friends.map(&:name), :margin_left => 10) do |friend_name|
+              @gtter.ignores << friend_name.text
+              @ignores.text = @gtter.ignores.join(", ")
+            end
+            button("clear") { @gtter.ignores = []; @ignores.text = "" }
+          end
+          @ignores = para(@gtter.ignores.join(", "), :stroke => white, :margin_left => 10)
+          button("Go Back") { @gtter.save; ui_start }
         end
       end
     end

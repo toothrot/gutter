@@ -28,7 +28,7 @@ Shoes.app :title => 'Gutter',:width => 400, :scroll => false do
   stroke white
 
   ## -- setup
-  @gtter = Gutter.new 
+  @gtter = Gutter.get_conf || Gutter.new 
 
   @content = stack
   get_login
