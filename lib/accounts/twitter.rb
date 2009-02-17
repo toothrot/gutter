@@ -8,16 +8,19 @@ class TwitterAccount
     @auth = {:username => opts[:user], :password => opts[:password]}
 
     begin
-    self.class.get('http://twitter.com/account/verify_credentials.json', :basic_auth => @auth)
-    @authorized = true
-    rescue => e
+    auth_response = self.class.get(
+      'http://twitter.com/account/verify_credentials.json', 
+      :basic_auth => @auth
+    )
+    @authorized = auth_response["error"].blank?
+    rescue
       @authorized = false
     end
   end
 
   def post(text)
     options = {
-        :query => {:status => text, :source => 'gutter'}, :basic_auth => @auth
+        :query => {:status => text, :source => 'gutter'}, :basic_auth => @auth}
     self.class.post('/statuses/update.json', options)
   end
 

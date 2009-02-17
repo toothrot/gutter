@@ -33,7 +33,7 @@ Shoes.app :title => 'Gutter',:width => 400, :scroll => false do
   @config = GutterConfig.get_conf || GutterConfig.new 
 
   @content = stack
-  if get_auth.authorized
+  if @config.user && @config.password && get_auth.authorized
     ui_start
   else
     get_login
