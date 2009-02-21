@@ -12,7 +12,7 @@ module TinyURLSupport
 private
   def tiny_url_for(full_url)
     return full_url if already_tiny_url?(full_url)
-    Net::HTTP.get URI.parse("http://tinyurl.com//api-create.php?url=#{full_url}")
+    Net::HTTP.get URI.parse("http://tinyurl.com/api-create.php?url=#{full_url}")
   end
   
   def already_tiny_url?(url)
