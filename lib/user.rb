@@ -6,4 +6,8 @@ class User
     @id = attributes["id"]
     @image_url = attributes['profile_image_url']
   end
+
+  def <=> (other)
+    self.name <=> other.name
+  end
 end
