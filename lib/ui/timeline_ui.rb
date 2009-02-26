@@ -93,7 +93,7 @@ module TimelineUI
     notify(@which,statuses)
     statuses.each do |status|
       unless @config.ignores.include? status.user.name
-        tweet = flow :margin => [5,4,gutter + 5,4] do
+        tweet = flow :margin => [5,2,gutter + 5,2] do
           status_background(status)
           status_image(status)
           status_text(status)
