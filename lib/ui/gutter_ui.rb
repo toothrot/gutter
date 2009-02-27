@@ -9,7 +9,7 @@ module GutterUI
       light = rect(:width => 30, :height => 14, :curve => 4,
         :fill => gray(0.3), :stroke => gray(0.9))
       light.hide
-      inscription text, :font => '9', :stroke => gray(0.8), :margin_top => 0
+      inscription text, :font => 'Coolvetica 9', :stroke => gray(0.8), :margin_top => 0
       dark.click { click_proc.call }
       dark.hover { light.show }
       dark.leave { light.hide }
