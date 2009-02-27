@@ -74,7 +74,7 @@ module TimelineUI
   def status_text(status)
     stack :width => -77 do
       flow do
-        para(status.user.name, :stroke => darkorange, :margin => [10,5,5,0], :font => 'Coolvetica')
+        para(status.user.name, :stroke => "#999", :margin => [10,5,5,0], :font => 'Coolvetica')
         inscription(status_time(status), :stroke => gray, :margin => [10,8,0,0])
       end
       inscription(insert_links(status.text), ' ', :margin => [10,0,0,6], :stroke => white, :leading => 0)
