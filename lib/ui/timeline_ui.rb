@@ -1,4 +1,32 @@
 module TimelineUI
+  def draw_timeline(page = 1)
+    statuses = @twit.timeline(:friends, :page => page)
+    notify(@which,statuses)
+
+    # main timeline
+    statuses.each do |status|
+      unless @config.ignores.include? status.user.name
+        tweet = flow :margin => [5,2,gutter + 5,2] do
+          status_background(status)
+          status_image(status)
+          status_text(status)
+          control = status_controls(status)
+        end # end tweet
+      end
+    end # end twit
+
+    # "load more" link
+    @more = flow :margin => [5,4,gutter+5,0] do
+      background @config.status_background, :curve => 10
+      para(
+        link('load more', :click => lambda {
+          @more.hide;
+          @timeline.append { draw_timeline(page+1) }
+        }), :align => 'center')
+    end
+  end
+
+private
   def do_twitpic(url)
     window(:title => 'twitpic') do
       background black
@@ -7,20 +35,6 @@ module TimelineUI
         image("http://twitpic.com/#{Hpricot(dump.response.body).at('#pic').get_attribute('src')}")
         @loading.remove
       end
-    end
-  end
-
-  def gray_button(text, click_proc)
-    stack :width => 40, :margin_left => 4, :margin_right => 4, :scroll => false, :height => 15 do
-      dark = rect(:width => 30, :height => 14, :curve => 4,
-        :fill => gray(0.3), :stroke => gray(0.6))
-      light = rect(:width => 30, :height => 14, :curve => 4,
-        :fill => gray(0.3), :stroke => gray(0.9))
-      light.hide
-      inscription text, :font => '9', :stroke => gray(0.8), :margin_top => 0
-      dark.click { click_proc.call }
-      dark.hover { light.show }
-      dark.leave { light.hide }
     end
   end
 
@@ -75,9 +89,9 @@ module TimelineUI
     stack :width => -77 do
       flow do
         para(status.user.name, :stroke => "#999", :margin => [10,5,5,0], :font => 'Coolvetica')
-        inscription(status_time(status), :stroke => gray, :margin => [10,8,0,0])
+        inscription(status_time(status), :stroke => "#999", :margin => [10,7,0,0])
       end
-      inscription(insert_links(status.text), ' ', :margin => [10,0,0,6], :stroke => white, :leading => 0)
+      inscription(insert_links(status.text), :margin => [10,0,0,4], :stroke => white, :leading => 0)
     end
   end
 
@@ -85,28 +99,6 @@ module TimelineUI
     stack :width => 22, :margin => [7,5,7,5] do
       image('http://toothrot.nfshost.com/gutter/icons/arrow_undo.png', 
         :click => lambda { reply(status) })
-    end
-  end
-
-  def draw_timeline(page = 1)
-    statuses = @twit.timeline(:friends, :page => page)
-    notify(@which,statuses)
-    statuses.each do |status|
-      unless @config.ignores.include? status.user.name
-        tweet = flow :margin => [5,2,gutter + 5,2] do
-          status_background(status)
-          status_image(status)
-          status_text(status)
-          control = status_controls(status)
-        end # end tweet
-      end
-    end # end twit
-    @more = flow :margin => [5,4,gutter+5,4] do
-      background @config.status_background, :curve => 10
-      para(link('load more', :click => lambda {
-          @more.hide;
-          @timeline.append { draw_timeline(page+1) }
-        }), :stroke => white, :align => 'center')
     end
   end
 
