@@ -8,6 +8,6 @@ class User
   end
 
   def <=> (other)
-    self.name <=> other.name
+    self.name.upcase <=> other.name.upcase
   end
 end

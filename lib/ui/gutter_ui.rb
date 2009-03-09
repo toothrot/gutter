@@ -58,7 +58,7 @@ module GutterUI
         stack(:margin => [8]*4) do
           para 'Ignore: ', :stroke => white
           flow do
-            list_box(:items => @twit.friends.map{ |f| f.name }.sort, :margin_left => 10) do |friend_name|
+            list_box(:items => @twit.friends.sort.map{|f| f.name}, :margin_left => 10) do |friend_name|
               @config.ignores << friend_name.text
               @ignores.text = @config.ignores.join(", ")
             end

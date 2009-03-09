@@ -57,7 +57,7 @@ module TimelineUI
       border gray, :curve => 10, :strokewidth => 2
     else 
       background '#202020', :curve => 10
-      border (status.user.screen_name == @user) ? darkslateblue : '#303030', :curve => 10, :strokewidth => 2
+      border '#303030', :curve => 10, :strokewidth => 2
     end
   end
 
