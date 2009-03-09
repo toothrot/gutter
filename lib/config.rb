@@ -1,9 +1,10 @@
 class GutterConfig
   FILENAME = File.join("#{ENV['HOME'] || ENV['USERPROFILE'] || ENV['HOMEPATH']}",'.gutter.yml')
-  attr_accessor :user, :password, :ignores
+  attr_accessor :user, :password, :ignores, :colors
 
   def initialize
     @ignores = []
+    colors
   end
 
   def save
@@ -18,8 +19,17 @@ class GutterConfig
     nil
   end
 
-  def status_background
-    "#202020"
+  def colors
+    defaults = {
+      :background => "#202020",
+      :border => "#303030",
+      :title => "#999",
+      :body => "#FFF",
+      :me => {
+        :background => "#303030",
+        :border => "#505050",
+      } # me
+    } # defaults
+    @colors ||= defaults
   end
-
 end

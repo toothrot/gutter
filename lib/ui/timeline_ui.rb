@@ -17,7 +17,7 @@ module TimelineUI
 
     # "load more" link
     @more = flow :margin => [5,4,gutter+5,0] do
-      background @config.status_background, :curve => 10
+      background @config.colors[:background], :curve => 10
       para(
         link('load more', :click => lambda {
           @more.hide;
@@ -67,11 +67,11 @@ private
 
   def status_background(status)
     if status.text =~ %r[@#{@user}]
-      background '#303030', :curve => 10
-      border gray, :curve => 10, :strokewidth => 2
+      background @config.colors[:me][:background], :curve => 10
+      border @config.colors[:me][:border], :curve => 10, :strokewidth => 2
     else 
-      background '#202020', :curve => 10
-      border '#303030', :curve => 10, :strokewidth => 2
+      background @config.colors[:background], :curve => 10
+      border @config.colors[:border], :curve => 10, :strokewidth => 2
     end
   end
 
@@ -88,10 +88,13 @@ private
   def status_text(status)
     stack :width => -77 do
       flow do
-        para(status.user.name, :stroke => "#999", :margin => [10,5,5,0], :font => 'Coolvetica')
-        inscription(status_time(status), :stroke => "#999", :margin => [10,7,0,0])
+        para(status.user.name, 
+          :stroke => @config.colors[:title], :margin => [10,5,5,0], :font => 'Coolvetica')
+        inscription(status_time(status),
+          :stroke => @config.colors[:title], :margin => [10,7,0,0])
       end
-      inscription(insert_links(status.text), :margin => [10,0,0,4], :stroke => white, :leading => 0)
+      inscription(insert_links(status.text), 
+        :stroke => @config.colors[:body], :margin => [10,0,0,4], :leading => 0)
     end
   end
 
