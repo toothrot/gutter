@@ -68,10 +68,10 @@ private
   def status_background(status)
     if status.text =~ %r[@#{@user}]
       background @config.colors[:me][:background]
-      border @config.colors[:me][:border], :strokewidth => 2
+      border @config.colors[:me][:border], :strokewidth => 1
     else 
       background @config.colors[:background]
-      border @config.colors[:border], :strokewidth => 2
+      border @config.colors[:border], :strokewidth => 1
     end
   end
 
@@ -94,7 +94,7 @@ private
           :stroke => @config.colors[:title], :margin => [10,7,0,0])
       end
       inscription(insert_links(status.text), 
-        :stroke => @config.colors[:body], :margin => [10,0,0,4], :leading => 0)
+        :stroke => @config.colors[:body], :margin => [10,0,0,2], :leading => 0).displace(0,-4)
     end
   end
 
