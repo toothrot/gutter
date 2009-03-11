@@ -6,7 +6,7 @@ module TimelineUI
     # main timeline
     statuses.each do |status|
       unless @config.ignores.include? status.user.name
-        tweet = flow :margin => [5,2,gutter + 5,2] do
+        tweet = flow :margin_right => gutter do
           status_background(status)
           status_image(status)
           status_text(status)
@@ -16,8 +16,8 @@ module TimelineUI
     end # end twit
 
     # "load more" link
-    @more = flow :margin => [5,4,gutter+5,0] do
-      background @config.colors[:background], :curve => 10
+    @more = flow :margin_right => gutter do
+      background @config.colors[:background]
       para(
         link('load more', :click => lambda {
           @more.hide;
@@ -67,11 +67,11 @@ private
 
   def status_background(status)
     if status.text =~ %r[@#{@user}]
-      background @config.colors[:me][:background], :curve => 10
-      border @config.colors[:me][:border], :curve => 10, :strokewidth => 2
+      background @config.colors[:me][:background]
+      border @config.colors[:me][:border], :strokewidth => 2
     else 
-      background @config.colors[:background], :curve => 10
-      border @config.colors[:border], :curve => 10, :strokewidth => 2
+      background @config.colors[:background]
+      border @config.colors[:border], :strokewidth => 2
     end
   end
 
