@@ -19,7 +19,7 @@ module GutterUI
 
       #header
       flow(:attach => Window, :top => 0, :left => 0, :height => 42, :margin_right => gutter) do
-        background gray(0.2, 0.8)
+        background @config.colors[:background]
         border dimgray
         flow :margin => [5,5,5,0] do
           # Input
@@ -31,7 +31,7 @@ module GutterUI
           stack :width => 40 do
             @blag = gray_button('blag', send_tweet)
             @counter = strong("140")
-            inscription @counter, :stroke => white, :margin => [8,0,0,0]
+            inscription @counter, :stroke => @config.colors[:body], :margin => [8,0,0,0]
           end
           para "| ", :stroke => gray
 
@@ -135,7 +135,7 @@ private
       flow do
         [:background, :border, :title, :body].each do |part|
           button(part.to_s)do
-            @config.colors[part] = ask_color(part.to_s.capitalize)
+            @config.colors[part] = ask_color(part.to_s.capitalize).to_s
             demo.clear { background black; demo_tweet }
           end
         end
