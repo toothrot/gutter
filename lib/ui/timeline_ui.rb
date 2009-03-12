@@ -39,7 +39,7 @@ private
   end
 
   def link_to_profile(reply_to_user)
-    user_id = reply_to_user.delete("@:")
+    user_id = reply_to_user.delete('@:!,.?')
     link(reply_to_user, :underline => 'none').click("http://twitter.com/#{user_id}")
   end
 
