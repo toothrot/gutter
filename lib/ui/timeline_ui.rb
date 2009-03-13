@@ -10,7 +10,7 @@ module TimelineUI
           status_background(status)
           status_image(status)
           status_text(status)
-          control = status_controls(status)
+          status_controls(status)
         end # end tweet
       end
     end # end twit
@@ -86,7 +86,7 @@ private
   end
 
   def status_text(status)
-    stack :width => -77 do
+    stack :width => -70 do
       flow do
         para(status.user.name, 
           :stroke => @config.colors[:title], :margin => [10,5,5,0], :font => 'Coolvetica')
@@ -99,7 +99,7 @@ private
   end
 
   def status_controls(status)
-    stack :width => 22, :margin => [7,5,7,5] do
+    stack :width => 10, :margin_top => 5 do
       image('http://toothrot.nfshost.com/gutter/icons/arrow_undo.png', 
         :click => lambda { reply(status) })
     end

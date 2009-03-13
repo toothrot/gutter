@@ -15,16 +15,14 @@ require 'lib/accounts/twitter'
 require 'lib/helpers/tiny_url_support'
 font 'vendor/fonts/coolvetica.ttf'
 
-# this should go away, but caching is broken in Ubuntu 8.10
+# this should go away, but caching is broken in Ubuntu 8.10 (ruby 1.8.7 lib)
 cache = File.join(LIB_DIR, "+data")
 File.delete(cache) if File.exists?(cache)
 
-Shoes.app :title => 'Gutter',:width => 400, :scroll => false do
+Shoes.app :title => 'Gutter', :width => 400 do
   extend GutterUI 
   extend Notify
   extend TinyURLSupport
-
-  app.slot.scroll(false)
 
   background black
   stroke white

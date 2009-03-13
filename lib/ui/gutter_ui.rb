@@ -23,7 +23,7 @@ module GutterUI
         border dimgray
         flow :margin => [5,5,5,0] do
           # Input
-          @tweet_text = edit_line("", :width => width - 140 - gutter) do |e| 
+          @tweet_text = edit_line("", :width => -110) do |e| 
             @counter.text =  140 - (e.text.size || 0)
           end
 
