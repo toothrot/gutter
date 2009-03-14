@@ -8,10 +8,8 @@ class TwitterAccount
     @auth = {:username => opts[:user], :password => opts[:password]}
 
     begin
-    auth_response = self.class.get(
-      'http://twitter.com/account/verify_credentials.json', 
-      :basic_auth => @auth
-    )
+    auth_response = self.class.get('/account/verify_credentials.json', 
+      :basic_auth => @auth)
     @authorized = auth_response["error"].blank?
     rescue
       @authorized = false
