@@ -3,9 +3,15 @@ class GutterConfig
   attr_accessor :user, :password, :ignores, :filters, :colors
 
   def initialize
-    @ignores = []
-    @filters = []
     colors
+  end
+
+  def ignores
+    @ignores || []
+  end
+
+  def filters
+    @filters || []
   end
 
   def save

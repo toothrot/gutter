@@ -106,7 +106,7 @@ private
   def filter(twits)
     twits.reject do |t|
       @config.ignores.include?(t.user.name) ||
-      @config.filters.detect { |f| t.text.match(/#{f}/) }
+      @config.filters.detect { |f| t.text.match(%r[#{f}]) }
     end
   end
 
