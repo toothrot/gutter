@@ -23,7 +23,7 @@ module GutterUI
         border dimgray
         flow :margin => [5,5,5,0] do
           # Input
-          @tweet_text = edit_line("", :width => -110) do |e| 
+          @tweet_text = edit_line("", :width => -110) do |e|
             @counter.text =  140 - (e.text.size || 0)
           end
 
@@ -36,9 +36,9 @@ module GutterUI
           para "| ", :stroke => gray
 
           # controls
-          image('http://toothrot.nfshost.com/gutter/icons/arrow_refresh.png', 
+          image('http://toothrot.nfshost.com/gutter/icons/arrow_refresh.png',
             :click => lambda { @timeline.clear { draw_timeline } }, :margin => [5,5,5,5] )
-          image('http://toothrot.nfshost.com/gutter/icons/cog.png', 
+          image('http://toothrot.nfshost.com/gutter/icons/cog.png',
             :click => lambda { @timeline.clear { draw_settings } }, :margin => [5,5,5,5] )
         end
       end # - header
@@ -64,6 +64,7 @@ module GutterUI
         tagline "Settings", :stroke => white
         get_login
         ignore_settings
+        filter_settings
         color_settings
         button("Go Back") { @config.save; ui_start }
       end
@@ -122,6 +123,21 @@ private
         button("clear") { @config.ignores = []; @ignores.text = "" }
       end
       @ignores = para(@config.ignores.join(", "), :stroke => white, :margin_left => 10)
+    end
+  end
+
+  def filter_settings
+    stack(:margin => [8]*4) do
+      para 'Filters: ', :stroke => white
+      flow do
+        filter_input = edit_line
+        button("nope") do
+          @config.filters << filter_input.text
+          @filters.text = @config.filters.join(", ")
+        end
+        button("clear") { @config.filters = []; @filters.text = "" }
+      end
+      @filters = para(@config.filters.join(", "), :stroke => white, :margin_left => 10)
     end
   end
 

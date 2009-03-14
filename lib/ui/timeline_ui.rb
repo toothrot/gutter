@@ -1,18 +1,16 @@
 module TimelineUI
   def draw_timeline(page = 1)
-    statuses = @twit.timeline(:friends, :page => page)
+    statuses = filter(@twit.timeline(:friends, :page => page))
     notify(@which,statuses)
 
     # main timeline
     statuses.each do |status|
-      unless @config.ignores.include? status.user.name
-        tweet = flow :margin_right => gutter do
-          status_background(status)
-          status_image(status)
-          status_text(status)
-          status_controls(status)
-        end # end tweet
-      end
+      tweet = flow :margin_right => gutter do
+        status_background(status)
+        status_image(status)
+        status_text(status)
+        status_controls(status)
+      end # end tweet
     end # end twit
 
     # "load more" link
@@ -69,7 +67,7 @@ private
     if status.text =~ %r[@#{@user}]
       background @config.colors[:me][:background]
       border @config.colors[:me][:border], :strokewidth => 1
-    else 
+    else
       background @config.colors[:background]
       border @config.colors[:border], :strokewidth => 1
     end
@@ -88,20 +86,27 @@ private
   def status_text(status)
     stack :width => -70 do
       flow do
-        para(status.user.name, 
+        para(status.user.name,
           :stroke => @config.colors[:title], :margin => [10,5,5,0], :font => 'Coolvetica')
         inscription(status_time(status),
           :stroke => @config.colors[:title], :margin => [10,7,0,0])
       end
-      inscription(insert_links(status.text), 
+      inscription(insert_links(status.text),
         :stroke => @config.colors[:body], :margin => [10,0,0,2], :leading => 0).displace(0,-4)
     end
   end
 
   def status_controls(status)
     stack :width => 10, :margin_top => 5 do
-      image('http://toothrot.nfshost.com/gutter/icons/arrow_undo.png', 
+      image('http://toothrot.nfshost.com/gutter/icons/arrow_undo.png',
         :click => lambda { reply(status) })
+    end
+  end
+
+  def filter(twits)
+    twits.reject do |t|
+      @config.ignores.include?(t.user.name) ||
+      @config.filters.detect { |f| t.text.match(/#{f}/) }
     end
   end
 
