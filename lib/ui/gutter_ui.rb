@@ -134,6 +134,7 @@ private
         button("nope") do
           @config.filters << filter_input.text
           @filters.text = @config.filters.join(", ")
+          filter_input.text = ""
         end
         button("clear") { @config.filters = []; @filters.text = "" }
       end
