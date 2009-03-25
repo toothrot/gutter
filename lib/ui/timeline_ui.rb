@@ -75,7 +75,7 @@ private
 
   def status_image(status)
     stack :width => 50, :margin => [6,6,2,6] do
-      image status.user.image_url if status.user
+      image(status.user.image_url, :width => 50) if status.user
     end
   end
 
