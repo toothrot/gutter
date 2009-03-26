@@ -30,7 +30,8 @@ private
       background black
       @loading = title 'Loading...', :stroke => white
       download url do |dump|
-        image("http://twitpic.com/#{Hpricot(dump.response.body).at('#photo').get_attribute('src')}")
+        info Hpricot(dump.response.body)
+        image("#{Hpricot(dump.response.body).at('img.photo-large').get_attribute('src')}")
         @loading.remove
       end
     end
