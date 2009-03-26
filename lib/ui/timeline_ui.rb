@@ -30,7 +30,6 @@ private
       background black
       @loading = title 'Loading...', :stroke => white
       download url do |dump|
-        info Hpricot(dump.response.body)
         image("#{Hpricot(dump.response.body).at('img.photo-large').get_attribute('src')}")
         @loading.remove
       end
