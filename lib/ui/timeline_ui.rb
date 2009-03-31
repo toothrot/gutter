@@ -25,14 +25,18 @@ module TimelineUI
   end
 
 private
-  def do_twitpic(url)
+  def pic_window(url)
     window(:title => 'twitpic') do
       background black
       @loading = title 'Loading...', :stroke => white
-      download url do |dump|
-        image("#{Hpricot(dump.response.body).at('img.photo-large').get_attribute('src')}")
-        @loading.remove
+      if url =~ /twitpic.com/
+        download url do |dump|
+          image("#{Hpricot(dump.response.body).at('img.photo-large').get_attribute('src')}")
+        end
+      else
+        image url
       end
+      @loading.remove
     end
   end
 
@@ -50,7 +54,9 @@ private
 
     decoded.split.inject([]) do |a,e|
       result = if(e =~ %r[https?://twitpic.com.*])
-        link(e) { do_twitpic(e.delete(',')) }
+        link(e) { pic_window(e.delete(',')) }
+      elsif(e =~ %r[https?://.*(.png|.jpg|.gif|.tiff)])
+        link(e) { pic_window(e.delete(',')) }
       elsif(e =~ %r[https?://\S*])
         link(e, :click => e)
       elsif(e =~ %r[@\w])
