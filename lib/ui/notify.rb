@@ -22,10 +22,10 @@ module Notify
   end
 
   def growl(user,status)
-    `#{@which} -t "#{user}" -m "#{status.gsub('"','\"')}"`
+    %x[#{@which} -t "#{user}" -m "#{status.gsub('"','\"')}"]
   end
 
   def libnotify(user,status)
-    `#{@which} "#{user}" "#{status.gsub('"','\"')}"`
+    %x[#{@which} "#{user}" "#{status.gsub('"','\"')}"]
   end
 end

@@ -53,7 +53,7 @@ private
     decoded = HTMLEntities.new.decode(str)
 
     decoded.split.inject([]) do |a,e|
-      result = if(e =~ %r[https?://twitpic.com.*])
+      result = if(e =~ %r[https?://(www.)?twitpic.com.*])
         link(e) { pic_window(e.delete(',')) }
       elsif(e =~ %r[https?://.*(.png|.jpg|.gif|.tiff)])
         link(e) { pic_window(e.delete(',')) }
