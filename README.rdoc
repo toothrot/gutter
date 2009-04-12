@@ -27,6 +27,14 @@ In Windows:
   * Download the latest Gutter .shy (http://github.com/toothrot/gutter/downloads)
   * Open the .shy from inside Shoes!
 
+==Features
+
+  * Built-in Twitpic viewing
+  * Anti-Social Networking:
+    * Hide posts from a User
+    * Hide posts matching a Regular Expression
+  * Basic theme support
+  * More...
 
 ==Things
 
