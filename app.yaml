@@ -1,0 +1,13 @@
+name: Gutter
+version: 1
+release: premium_paid_accounts
+icons:
+  win32:  vendor/shoes/shoes.ico
+  osx:    vendor/shoes/Shoes.icns
+  gtk:    vendor/shoes/shoes-icon-blue.png
+dmg:
+  ds_store: platform/mac/dmg_ds_store
+  background: vendor/shoes/shoes-dmg.jpg
+run: app/gutter.rb
+clone: git checkout-index --prefix=dist/app/ -a
+ignore: [things]
