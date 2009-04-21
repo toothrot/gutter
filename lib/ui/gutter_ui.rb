@@ -40,7 +40,7 @@ module GutterUI
           image('http://toothrot.nfshost.com/gutter/icons/arrow_refresh.png',
             :click => lambda { @timeline.clear { draw_timeline } }, :margin => [5,5,5,5] )
           image('http://toothrot.nfshost.com/gutter/icons/cog.png',
-            :click => lambda { @timeline.clear { show_settings } }, :margin => [5,5,5,5] )
+            :click => lambda { show_settings }, :margin => [5,5,5,5] )
         end
       end # - header
 
